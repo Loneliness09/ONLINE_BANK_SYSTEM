@@ -6,7 +6,7 @@
 
     <groupId>com.alight</groupId>
     <artifactId>ONLINE_BANK_SYSTEM</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.1</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
