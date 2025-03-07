@@ -11,7 +11,6 @@ public class CustomerLogin {
 
     private int customerID = 0;
     private String customerName;
-
     private List<Integer> accountList;
     static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     static final Pattern pattern = Pattern.compile(EMAIL_REGEX);
