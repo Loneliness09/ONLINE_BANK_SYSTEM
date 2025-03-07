@@ -1,10 +1,6 @@
 package org.example;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,28 +42,14 @@ public class CustomerLogin {
 
     // 客户登录
     public boolean login(String email, String passwd) {
-        String sql = "SELECT customer_id FROM Customers WHERE email = ? AND passwd = ?";
-        String sql1 = "SELECT customer_name FROM Customers WHERE customer_id = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql);
-             PreparedStatement pstmt1 = conn.prepareStatement(sql1);) {
-            pstmt.setString(1, email);
-            pstmt.setString(2, passwd); // 在实际应用中，密码应该被加密并匹配存储的哈希值
-            ResultSet rs = pstmt.executeQuery();
-            // 如果查询有结果，则表示登录成功
-            if(rs.next()) {
-                System.out.println("Customer login successfully.");
-                customerID = rs.getInt("customer_id");
-                pstmt.setString(1, Integer.toString(customerID));
-                ResultSet rs1 = pstmt1.executeQuery();
-                customerName = rs1.getString("customer_name");
-
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        customerID = query.login(email, passwd);
+        if (customerID == 0) {
             return false;
         }
-        return false;
+        customerName = query.getCustomerName(customerID);
+        accountList = query.getCustomerAccounts(customerID);
+        println();
+        return true;
     }
 
     // 客户登出
@@ -81,5 +63,13 @@ public class CustomerLogin {
     // 客户注销账户
     public boolean unregister() {
         return query.deleteCustomer(customerID);
+    }
+
+    public static void main(String[] args) {
+        SQLQuery sql = new SQLQuery();
+        CustomerLogin login = new CustomerLogin(sql);
+        login.login("abcaaddyytiar@qq.com", "123456");
+        login.logout();
+        sql.closeConnection();
     }
 }

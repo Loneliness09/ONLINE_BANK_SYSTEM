@@ -40,11 +40,12 @@ public class SQLQuery {
 
     public String getCustomerName(int customerID) {
         String sql = "SELECT customer_name FROM Customers WHERE customer_id = ?";
-        try (PreparedStatement pstmt1 = conn.prepareStatement(sql)) {
-                ResultSet rs = pstmt1.executeQuery();
-                if (rs.next()) {
-                    return rs.getString("customer_name");
-                }
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, Integer.toString(customerID));
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("customer_name");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,8 +56,9 @@ public class SQLQuery {
 
     public String getAccountList(int customerID) {
         String sql = "SELECT account_id FROM Accounts WHERE customer_id = ?";
-        try (PreparedStatement pstmt1 = conn.prepareStatement(sql)) {
-            ResultSet rs = pstmt1.executeQuery();
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, Integer.toString(customerID));
+            ResultSet rs = pstmt.executeQuery();
             return rs.getString("account_id");
         } catch (SQLException e) {
             e.printStackTrace();
