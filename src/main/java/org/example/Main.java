@@ -13,12 +13,7 @@ public class Main {
                     "    2. 注册\n" +
                     "    3. 退出\n" +
                     gap;
-    public static String customerMenu =
-                    "    1. 登入账户\n" +
-                    "    2. 创建账户\n" +
-                    "    3. 注销账户\n" +
-                    "    4. 注销\n" +
-                    gap;
+
     public static String accountMenu =
                     gap +
                     "    账户菜单\n" +
@@ -44,7 +39,9 @@ public class Main {
                     String email = input.nextLine();
                     System.out.print("密码: ");
                     String passwd = input.nextLine();
-                    login.login(email, passwd);
+                    if (!login.login(email, passwd)) {
+                        continue;
+                    }
                 } else if (in.equals("2")) {
                     System.out.print("姓名: ");
                     String name = input.nextLine();
@@ -52,16 +49,53 @@ public class Main {
                     String email = input.nextLine();
                     System.out.print("密码: ");
                     String passwd = input.nextLine();
-                    login.register(name, email, passwd);
+                    if (login.register(name, email, passwd)) {
+                        continue;
+                    }
                 } else if (in.equals("3")) {
                     System.out.println("再见.");
                     System.exit(0);
                 } else {
                     System.out.println("输入不合法, 重新输入.");
-                    continue;
                 }
             } else {
+                System.out.print(
+                        gap +
+                        "    已登录." +
+                        "    姓名: " + login.getCustomerName() + "\n" +
+                        "    邮箱: " + login.getCustomerEmail() + "\n" +
+                        "    账户列表: " + login.getAccountList().toString() + "\n" +
+                        "    1. 登入账户\n" +
+                        "    2. 创建账户\n" +
+                        "    3. 注销账户\n" +
+                        "    4. 登出\n" +
+                        "    5. 注销\n" +
+                        gap
+                );
+                System.out.print("请输入: ");
+                in = input.next();
+                switch (in) {
+                    case "1":
+                        break;
 
+                    case "2":
+
+                        break;
+
+                    case "3":
+                        break;
+
+                    case "4":
+                        login.logout();
+                        break;
+
+                    case "5":
+                        login.unregister();
+                        break;
+
+                    default:
+
+                }
             }
 
         }

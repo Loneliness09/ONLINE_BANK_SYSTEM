@@ -1,23 +1,21 @@
 package org.example;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CustomerLogin {
-    private Connection conn;
-    private SQLQuery query;
+    private final SQLQuery query;
 
     private int customerID = 0;
     private String customerName;
+    private String customerEmail;
     private List<Integer> accountList;
     static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     static final Pattern pattern = Pattern.compile(EMAIL_REGEX);
 
     public CustomerLogin(SQLQuery query) {
         this.query = query;
-        this.conn = this.query.conn;
     }
 
     public int getCustomerID() {
@@ -28,11 +26,19 @@ public class CustomerLogin {
         return customerName;
     }
 
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public List<Integer> getAccountList() {
+        return accountList;
+    }
+
     // 打印信息
     public void println() {
-        System.out.println("用户ID: " + Integer.toString(customerID));
-        System.out.println("用户姓名: " + customerName);
-        System.out.print("账户列表: ");
+        System.out.println("    用户ID: " + customerID);
+        System.out.println("    用户姓名: " + customerName);
+        System.out.print("    账户列表: ");
         System.out.println(accountList);
 
     }
@@ -54,6 +60,7 @@ public class CustomerLogin {
             return false;
         }
         customerName = query.getCustomerName(customerID);
+        customerEmail = query.getCustomerEmail(customerID);
         accountList = query.getCustomerAccounts(customerID);
         println();
         return true;

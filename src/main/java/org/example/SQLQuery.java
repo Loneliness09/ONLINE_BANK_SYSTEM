@@ -54,16 +54,20 @@ public class SQLQuery {
         return null;
     }
 
-    public String getAccountList(int customerID) {
-        String sql = "SELECT account_id FROM Accounts WHERE customer_id = ?";
+    public String getCustomerEmail(int customerID) {
+        String sql = "SELECT customer_email FROM Customers WHERE customer_id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, Integer.toString(customerID));
             ResultSet rs = pstmt.executeQuery();
-            return rs.getString("account_id");
+            if (rs.next()) {
+                return rs.getString("customer_email");
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
+        return null;
     }
 
     public int addCustomer(String customerName, String email, String passwd) {
@@ -92,8 +96,8 @@ public class SQLQuery {
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, customerId);
             int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) System.out.println("账户创建成功.");
-            else System.out.println("账户创建失败.");
+            if (affectedRows > 0) System.out.println("用户注销成功.");
+            else System.out.println("用户注销失败.");
             return affectedRows > 0;
         } catch (SQLException e) {
             e.printStackTrace();
