@@ -325,7 +325,7 @@ public class SQLQuery {
         SQLQuery sqlQuery = new SQLQuery();
 
         // 测试添加客户
-        int customerId = sqlQuery.addCustomer("John Doe", "abcaayytiar@qq.com", "123456");
+        int customerId = sqlQuery.addCustomer("John Doe", "abcaaddyytiar@qq.com", "123456");
         System.out.println("Added customer with ID: " + customerId);
 
         // 测试创建账户
