@@ -6,32 +6,77 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 public class SQLQuery {
     Connection conn = null;
+
+
     public SQLQuery() {
         try {
             conn = DatabaseConnection.getConnection();
         }
         catch (SQLException e) {
-            System.out.println("Error adding customer: " + e.getMessage());
+            System.out.println("Error start connection: " + e.getMessage());
+        }
+    }
+
+    public int login(String email, String passwd) {
+        String sql = "SELECT customer_id FROM Customers WHERE email = ? AND passwd = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setString(1, email);
+            pstmt.setString(2, passwd); // 在实际应用中，密码应该被加密并匹配存储的哈希值
+            ResultSet rs = pstmt.executeQuery();
+            // 如果查询有结果，则表示登录成功
+            if(rs.next()) {
+                System.out.println("Customer login successfully.");
+                return rs.getInt("customer_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return 0;
+    }
+
+    public String getCustomerName(int customerID) {
+        String sql = "SELECT customer_name FROM Customers WHERE customer_id = ?";
+        try (PreparedStatement pstmt1 = conn.prepareStatement(sql)) {
+                ResultSet rs = pstmt1.executeQuery();
+                if (rs.next()) {
+                    return rs.getString("customer_name");
+                }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
+    public String getAccountList(int customerID) {
+        String sql = "SELECT account_id FROM Accounts WHERE customer_id = ?";
+        try (PreparedStatement pstmt1 = conn.prepareStatement(sql)) {
+            ResultSet rs = pstmt1.executeQuery();
+            return rs.getString("account_id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
     public int addCustomer(String customerName, String email, String passwd) {
         String sql = "INSERT INTO Customers (customer_name, email, passwd) VALUES (?, ?, ?)";
-        String selectSQL = "SELECT customer_id FROM Customers WHERE email = ?";
-        int customerId = -1; // 默认值，表示未成功添加客户
-        try (PreparedStatement pstmt = conn.prepareStatement(sql);
-             PreparedStatement pstmtSelect = conn.prepareStatement(selectSQL)) {
+
+        int customerId = 0; // 默认值，表示未成功添加客户
+        try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, customerName);
             pstmt.setString(2, email);
             pstmt.setString(3, passwd);
             pstmt.executeUpdate();
             System.out.println("Customer added successfully.");
-            pstmtSelect.setString(1, email);
-            ResultSet rs = pstmtSelect.executeQuery();
-            if (rs.next()) {
-                customerId = rs.getInt("customer_id");
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                customerId = generatedKeys.getInt(1);
             }
         } catch (SQLException e) {
             System.out.println("Error adding customer: " + e.getMessage());
@@ -39,9 +84,21 @@ public class SQLQuery {
         return customerId;
     }
 
+    public boolean deleteCustomer(int customerId) {
+        String sql = "DELETE FROM Customers WHERE customer_id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, customerId);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public int createAccount(int customerId, String passwd) {
         String sql = "INSERT INTO Accounts (customer_id, passwd) VALUES (?, ?)";
-        int accountId = -1;
+        int accountId = 0;
         try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, customerId);
             pstmt.setString(2, passwd);
@@ -257,7 +314,6 @@ public class SQLQuery {
                         rs.getTimestamp("transaction_date")
                 );
                 transactionList.add(record);
-//                record.printInfo();
             }
         } catch (SQLException e) {
             System.out.println("Error retrieving transaction records: " + e.getMessage());
@@ -265,50 +321,7 @@ public class SQLQuery {
         return transactionList;
     }
 
-    // 内部类用于表示交易记录
-    public static class TransactionRecord {
-        private int transactionId;
-        private int accountId;
-        private int targetAccountId;
-        private BigDecimal amount;
-        private String transactionType;
-        private java.sql.Timestamp transactionDate;
 
-        public TransactionRecord(int transactionId, int accountId, int targetAccountId, BigDecimal amount, String transactionType, java.sql.Timestamp transactionDate) {
-            this.transactionId = transactionId;
-            this.accountId = accountId;
-            this.targetAccountId = targetAccountId;
-            this.amount = amount;
-            this.transactionType = transactionType;
-            this.transactionDate = transactionDate;
-        }
-
-        public void printInfo() {
-            System.out.print("ID: ");
-            System.out.print(this.transactionId);
-            System.out.print("\t");
-
-            System.out.print("ACCOUNT_ID: ");
-            System.out.print(this.accountId);
-            System.out.print("\t");
-
-            System.out.print("TARGET_ID: ");
-            System.out.print(this.targetAccountId);
-            System.out.print("\t");
-
-            System.out.print("AMOUNT: ");
-            System.out.print(this.amount);
-            System.out.print("\t");
-
-            System.out.print("TYPE: ");
-            System.out.print(this.transactionType);
-            System.out.print("\t");
-
-            System.out.print("DATE: ");
-            System.out.print( this.transactionDate);
-            System.out.print("\n");
-        }
-    }
 
     // 确保在不需要时关闭数据库连接
     public void closeConnection() {
@@ -371,3 +384,4 @@ public class SQLQuery {
         sqlQuery.closeConnection();
     }
 }
+
