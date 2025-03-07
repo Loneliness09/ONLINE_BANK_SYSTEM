@@ -11,6 +11,9 @@ public class CustomerLogin {
     private String customerName;
     private String customerEmail;
     private List<Integer> accountList;
+
+    private Account account;
+    private int accountID = 0;
     static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     static final Pattern pattern = Pattern.compile(EMAIL_REGEX);
 
@@ -57,6 +60,18 @@ public class CustomerLogin {
     public boolean login(String email, String passwd) {
         customerID = query.login(email, passwd);
         if (customerID == 0) {
+            return false;
+        }
+        customerName = query.getCustomerName(customerID);
+        customerEmail = query.getCustomerEmail(customerID);
+        accountList = query.getCustomerAccounts(customerID);
+        println();
+        return true;
+    }
+
+    public boolean accountLogin(int accountID, String passwd) {
+        this.accountID = query.accountLogin(accountID, passwd);
+        if (accountID == 0) {
             return false;
         }
         customerName = query.getCustomerName(customerID);

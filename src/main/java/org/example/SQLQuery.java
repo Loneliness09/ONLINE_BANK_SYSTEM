@@ -38,6 +38,24 @@ public class SQLQuery {
         return 0;
     }
 
+    public int accountLogin(int accountID, String passwd) {
+        String sql = "SELECT account_id FROM Accounts WHERE account_id = ? AND passwd = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setString(1, Integer.toString(accountID));
+            pstmt.setString(2, passwd); // 在实际应用中，密码应该被加密并匹配存储的哈希值
+            ResultSet rs = pstmt.executeQuery();
+            // 如果查询有结果，则表示登录成功
+            if(rs.next()) {
+                System.out.println("账户登录成功.");
+                return rs.getInt("account_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return 0;
+    }
+
     public String getCustomerName(int customerID) {
         String sql = "SELECT customer_name FROM Customers WHERE customer_id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -127,7 +145,7 @@ public class SQLQuery {
     public boolean deleteAccount(int accountId) {
         System.out.println(getAccountBalance(accountId).toString());
         if (Objects.equals(Double.valueOf(getAccountBalance(accountId).toString()), 0.0)) {
-            if (deleteAccountTransactions(accountId)) System.out.println("交易记录删除成功.");
+            if (deleteTransactions(accountId)) System.out.println("交易记录删除成功.");
             // SQL 语句用于删除账户
             String deleteAccountSql = "DELETE FROM Accounts WHERE account_id = ?";
             // SQL 语句用于检查账户是否有交易记录
@@ -262,7 +280,7 @@ public class SQLQuery {
         }
     }
 
-    public boolean deleteAccountTransactions(int accountId) {
+    public boolean deleteTransactions(int accountId) {
         String deleteSQL = "DELETE FROM Transactions WHERE account_id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(deleteSQL)) {
             pstmt.setInt(1, accountId);
