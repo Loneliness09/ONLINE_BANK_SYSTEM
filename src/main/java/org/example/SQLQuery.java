@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SQLQuery {
     Connection conn = null;
@@ -56,49 +57,51 @@ public class SQLQuery {
         return accountId;
     }
 
-    public boolean deleteAccount(int accountId, String passwd) {
-        if (getAccountBalance(accountId) != new BigDecimal(0)) {
+    public boolean deleteAccount(int accountId) {
+        System.out.println(getAccountBalance(accountId).toString());
+        if (Objects.equals(Double.valueOf(getAccountBalance(accountId).toString()), 0.0)) {
+            if (deleteAccountTransactions(accountId)) System.out.println("Transactions deleted.");
+            // SQL 语句用于删除账户
+            String deleteAccountSql = "DELETE FROM Accounts WHERE account_id = ?";
+            // SQL 语句用于检查账户是否有交易记录
+            String checkTransactionsSql = "SELECT COUNT(*) FROM Transactions WHERE account_id = ?";
+
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkTransactionsSql);
+                 PreparedStatement deleteStmt = conn.prepareStatement(deleteAccountSql)) {
+
+                // 设置参数并检查账户是否有交易记录
+                checkStmt.setInt(1, accountId);
+                int transactionCount = 0;
+                try (ResultSet rs = checkStmt.executeQuery()) {
+                    if (rs.next()) {
+                        transactionCount = rs.getInt(1);
+                    }
+                }
+
+                // 如果账户没有交易记录，则允许删除
+                if (transactionCount == 0) {
+                    // 设置参数并执行删除操作
+                    deleteStmt.setInt(1, accountId);
+                    int affectedRows = deleteStmt.executeUpdate();
+                    if (affectedRows > 0) {
+                        System.out.println("Account with ID " + accountId + " has been successfully deleted.");
+                    } else {
+                        System.out.println("No account found with ID " + accountId);
+                        return false;
+                    }
+                } else {
+                    System.out.println("Cannot delete account with ID " + accountId + " because it has associated transactions.");
+                    return false;
+                }
+            } catch (SQLException e) {
+                System.out.println("Error deleting account: " + e.getMessage());
+                return false;
+            }
+            return true;
+        } else {
             System.out.println("Cannot delete account with ID because it also has deposits.");
             return false;
         }
-        deleteAccountTransactions(accountId);
-        // SQL 语句用于删除账户
-        String deleteAccountSql = "DELETE FROM Accounts WHERE account_id = ?";
-        // SQL 语句用于检查账户是否有交易记录
-        String checkTransactionsSql = "SELECT COUNT(*) FROM Transactions WHERE account_id = ?";
-
-        try (PreparedStatement checkStmt = conn.prepareStatement(checkTransactionsSql);
-             PreparedStatement deleteStmt = conn.prepareStatement(deleteAccountSql)) {
-
-            // 设置参数并检查账户是否有交易记录
-            checkStmt.setInt(1, accountId);
-            int transactionCount = 0;
-            try (ResultSet rs = checkStmt.executeQuery()) {
-                if (rs.next()) {
-                    transactionCount = rs.getInt(1);
-                }
-            }
-
-            // 如果账户没有交易记录，则允许删除
-            if (transactionCount == 0) {
-                // 设置参数并执行删除操作
-                deleteStmt.setInt(1, accountId);
-                int affectedRows = deleteStmt.executeUpdate();
-                if (affectedRows > 0) {
-                    System.out.println("Account with ID " + accountId + " has been successfully deleted.");
-                } else {
-                    System.out.println("No account found with ID " + accountId);
-                    return false;
-                }
-            } else {
-                System.out.println("Cannot delete account with ID " + accountId + " because it has associated transactions.");
-                return false;
-            }
-        } catch (SQLException e) {
-            System.out.println("Error deleting account: " + e.getMessage());
-            return false;
-        }
-        return true;
     }
 
     public void deposit(int accountId, double amount) {
@@ -249,7 +252,7 @@ public class SQLQuery {
                         rs.getInt("transaction_id"),
                         rs.getInt("account_id"),
                         rs.getInt("target_account_id"),
-                        rs.getDouble("amount"),
+                        rs.getBigDecimal("amount"),
                         rs.getString("transaction_type"),
                         rs.getTimestamp("transaction_date")
                 );
@@ -267,11 +270,11 @@ public class SQLQuery {
         private int transactionId;
         private int accountId;
         private int targetAccountId;
-        private double amount;
+        private BigDecimal amount;
         private String transactionType;
         private java.sql.Timestamp transactionDate;
 
-        public TransactionRecord(int transactionId, int accountId, int targetAccountId, double amount, String transactionType, java.sql.Timestamp transactionDate) {
+        public TransactionRecord(int transactionId, int accountId, int targetAccountId, BigDecimal amount, String transactionType, java.sql.Timestamp transactionDate) {
             this.transactionId = transactionId;
             this.accountId = accountId;
             this.targetAccountId = targetAccountId;
@@ -322,7 +325,7 @@ public class SQLQuery {
         SQLQuery sqlQuery = new SQLQuery();
 
         // 测试添加客户
-        int customerId = sqlQuery.addCustomer("John Doe", "abcaar@qq.com", "123456");
+        int customerId = sqlQuery.addCustomer("John Doe", "abcaayytiar@qq.com", "123456");
         System.out.println("Added customer with ID: " + customerId);
 
         // 测试创建账户
@@ -341,6 +344,7 @@ public class SQLQuery {
         // 测试转账
         int targetAccountId = sqlQuery.createAccount(customerId, "222222");
         boolean transferSuccess = sqlQuery.transfer(accountId, targetAccountId, 300.0);
+        System.out.println("Transfer amount: " + "300.00" + " success.");
 
         // 测试查找客户对应的账户列表
         List<Integer> customerAccounts = sqlQuery.getCustomerAccounts(customerId);
@@ -357,8 +361,10 @@ public class SQLQuery {
             record.printInfo();
         }
 
+//        sqlQuery.deposit(accountId, 0);
+
         // 测试删除账户
-        boolean deleteAccountSuccess = sqlQuery.deleteAccount(accountId, "123456");
+        boolean deleteAccountSuccess = sqlQuery.deleteAccount(accountId);
         System.out.println("Account deletion successful: " + deleteAccountSuccess);
 
         // 关闭数据库连接
