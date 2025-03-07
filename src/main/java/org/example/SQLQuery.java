@@ -344,7 +344,7 @@ public class SQLQuery {
         // 测试转账
         int targetAccountId = sqlQuery.createAccount(customerId, "222222");
         boolean transferSuccess = sqlQuery.transfer(accountId, targetAccountId, 300.0);
-        System.out.println("Transfer amount: " + "300.00" + " success.");
+        if (transferSuccess) System.out.println("Transfer amount: " + "300.00" + " success.");
 
         // 测试查找客户对应的账户列表
         List<Integer> customerAccounts = sqlQuery.getCustomerAccounts(customerId);
