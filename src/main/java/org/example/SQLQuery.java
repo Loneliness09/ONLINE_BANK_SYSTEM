@@ -6,32 +6,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 public class SQLQuery {
     Connection conn = null;
+
+
     public SQLQuery() {
         try {
             conn = DatabaseConnection.getConnection();
         }
         catch (SQLException e) {
-            System.out.println("Error adding customer: " + e.getMessage());
+            System.out.println("Error start connection: " + e.getMessage());
         }
     }
 
     public int addCustomer(String customerName, String email, String passwd) {
         String sql = "INSERT INTO Customers (customer_name, email, passwd) VALUES (?, ?, ?)";
-        String selectSQL = "SELECT customer_id FROM Customers WHERE email = ?";
-        int customerId = -1; // 默认值，表示未成功添加客户
-        try (PreparedStatement pstmt = conn.prepareStatement(sql);
-             PreparedStatement pstmtSelect = conn.prepareStatement(selectSQL)) {
+
+        int customerId = 0; // 默认值，表示未成功添加客户
+        try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, customerName);
             pstmt.setString(2, email);
             pstmt.setString(3, passwd);
             pstmt.executeUpdate();
             System.out.println("Customer added successfully.");
-            pstmtSelect.setString(1, email);
-            ResultSet rs = pstmtSelect.executeQuery();
-            if (rs.next()) {
-                customerId = rs.getInt("customer_id");
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                customerId = generatedKeys.getInt(1);
             }
         } catch (SQLException e) {
             System.out.println("Error adding customer: " + e.getMessage());
@@ -41,7 +42,7 @@ public class SQLQuery {
 
     public int createAccount(int customerId, String passwd) {
         String sql = "INSERT INTO Accounts (customer_id, passwd) VALUES (?, ?)";
-        int accountId = -1;
+        int accountId = 0;
         try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, customerId);
             pstmt.setString(2, passwd);
@@ -272,7 +273,7 @@ public class SQLQuery {
         private int targetAccountId;
         private BigDecimal amount;
         private String transactionType;
-        private java.sql.Timestamp transactionDate;
+        private Timestamp transactionDate;
 
         public TransactionRecord(int transactionId, int accountId, int targetAccountId, BigDecimal amount, String transactionType, java.sql.Timestamp transactionDate) {
             this.transactionId = transactionId;
