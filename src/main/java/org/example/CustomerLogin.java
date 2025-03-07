@@ -21,11 +21,19 @@ public class CustomerLogin {
         this.conn = this.query.conn;
     }
 
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
     // 打印信息
     public void println() {
-        System.out.println("ID: " + Integer.toString(customerID));
-        System.out.println("Name: " + customerName);
-        System.out.print("Accounts: ");
+        System.out.println("用户ID: " + Integer.toString(customerID));
+        System.out.println("用户姓名: " + customerName);
+        System.out.print("账户列表: ");
         System.out.println(accountList);
 
     }
@@ -34,7 +42,7 @@ public class CustomerLogin {
         Matcher matcher = pattern.matcher(email);
 
         if (!matcher.matches()) {
-            System.out.println("Error adding customer: The email address format is not legal");
+            System.out.println("注册失败: 邮箱格式不正确.");
             return false;
         }
         return query.addCustomer(customerName, email, passwd) != 0;
@@ -57,7 +65,7 @@ public class CustomerLogin {
         customerID = 0;
         customerName = null;
         accountList = null;
-        System.out.println("Customer logged out.");
+        System.out.println("用户登出.");
     }
 
     // 客户注销账户

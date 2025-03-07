@@ -22,27 +22,27 @@ public class TransactionRecord {
     }
 
     public void printInfo() {
-        System.out.print("ID: ");
+        System.out.print("交易ID: ");
         System.out.print(this.transactionId);
         System.out.print("\t");
 
-        System.out.print("ACCOUNT_ID: ");
+        System.out.print("账户ID: ");
         System.out.print(this.accountId);
         System.out.print("\t");
 
-        System.out.print("TARGET_ID: ");
+        System.out.print("对方账户ID: ");
         System.out.print(this.targetAccountId);
         System.out.print("\t");
 
-        System.out.print("AMOUNT: ");
+        System.out.print("金额: ");
         System.out.print(this.amount);
         System.out.print("\t");
 
-        System.out.print("TYPE: ");
+        System.out.print("类型: ");
         System.out.print(this.transactionType);
         System.out.print("\t");
 
-        System.out.print("DATE: ");
+        System.out.print("日期: ");
         System.out.print(this.transactionDate);
         System.out.print("\n");
     }

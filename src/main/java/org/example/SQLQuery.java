@@ -10,13 +10,13 @@ import java.util.Objects;
 public class SQLQuery {
     Connection conn = null;
 
-
     public SQLQuery() {
         try {
             conn = DatabaseConnection.getConnection();
+            System.out.println("数据库连接成功.");
         }
         catch (SQLException e) {
-            System.out.println("Error start connection: " + e.getMessage());
+            System.out.println("数据库连接失败: " + e.getMessage());
         }
     }
 
@@ -28,7 +28,7 @@ public class SQLQuery {
             ResultSet rs = pstmt.executeQuery();
             // 如果查询有结果，则表示登录成功
             if(rs.next()) {
-                System.out.println("Customer login successfully.");
+                System.out.println("用户登录成功.");
                 return rs.getInt("customer_id");
             }
         } catch (SQLException e) {
@@ -75,13 +75,14 @@ public class SQLQuery {
             pstmt.setString(2, email);
             pstmt.setString(3, passwd);
             pstmt.executeUpdate();
-            System.out.println("Customer added successfully.");
+
             ResultSet generatedKeys = pstmt.getGeneratedKeys();
             if (generatedKeys.next()) {
+                System.out.println("用户注册成功.");
                 customerId = generatedKeys.getInt(1);
             }
         } catch (SQLException e) {
-            System.out.println("Error adding customer: " + e.getMessage());
+            System.out.println("用户注册失败: " + e.getMessage());
         }
         return customerId;
     }
@@ -91,6 +92,8 @@ public class SQLQuery {
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, customerId);
             int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) System.out.println("账户创建成功.");
+            else System.out.println("账户创建失败.");
             return affectedRows > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -105,13 +108,14 @@ public class SQLQuery {
             pstmt.setInt(1, customerId);
             pstmt.setString(2, passwd);
             pstmt.executeUpdate();
-            System.out.println("Account created successfully.");
+
             ResultSet generatedKeys = pstmt.getGeneratedKeys();
             if (generatedKeys.next()) {
+                System.out.println("账户创建成功.");
                 accountId = generatedKeys.getInt(1); // 获取第一个生成的键，即账户ID
             }
         } catch (SQLException e) {
-            System.out.println("Error creating account: " + e.getMessage());
+            System.out.println("账户创建失败: " + e.getMessage());
         }
         return accountId;
     }
@@ -119,7 +123,7 @@ public class SQLQuery {
     public boolean deleteAccount(int accountId) {
         System.out.println(getAccountBalance(accountId).toString());
         if (Objects.equals(Double.valueOf(getAccountBalance(accountId).toString()), 0.0)) {
-            if (deleteAccountTransactions(accountId)) System.out.println("Transactions deleted.");
+            if (deleteAccountTransactions(accountId)) System.out.println("交易记录删除成功.");
             // SQL 语句用于删除账户
             String deleteAccountSql = "DELETE FROM Accounts WHERE account_id = ?";
             // SQL 语句用于检查账户是否有交易记录
@@ -143,22 +147,22 @@ public class SQLQuery {
                     deleteStmt.setInt(1, accountId);
                     int affectedRows = deleteStmt.executeUpdate();
                     if (affectedRows > 0) {
-                        System.out.println("Account with ID " + accountId + " has been successfully deleted.");
+                        System.out.println("ID为 " + accountId + " 的账户已注销.");
                     } else {
-                        System.out.println("No account found with ID " + accountId);
+                        System.out.println("没有找到ID为 " + accountId + " 的账户");
                         return false;
                     }
                 } else {
-                    System.out.println("Cannot delete account with ID " + accountId + " because it has associated transactions.");
+                    System.out.println("不可注销ID为 " + accountId + " 的账户, 因为它还有交易记录.");
                     return false;
                 }
             } catch (SQLException e) {
-                System.out.println("Error deleting account: " + e.getMessage());
+                System.out.println("账户注销错误: " + e.getMessage());
                 return false;
             }
             return true;
         } else {
-            System.out.println("Cannot delete account with ID because it also has deposits.");
+            System.out.println("不可以注销ID为 " + accountId + " 的账户, 因为它还有存款.");
             return false;
         }
     }
@@ -171,14 +175,14 @@ public class SQLQuery {
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
                 recordTransaction(accountId, null, amount, "deposit");
-                System.out.print("Deposit ");
+                System.out.print("存入 ");
                 System.out.print(amount);
-                System.out.println(" successful.");
+                System.out.println("元 成功.");
             } else {
-                System.out.println("Account not found.");
+                System.out.println("账户不存在.");
             }
         } catch (SQLException e) {
-            System.out.println("Error depositing: " + e.getMessage());
+            System.out.println("存款失败: " + e.getMessage());
         }
     }
 
@@ -191,14 +195,14 @@ public class SQLQuery {
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
                 recordTransaction(accountId, null, amount, "withdraw");
-                System.out.print("Withdrawal ");
+                System.out.print("取出 ");
                 System.out.print(amount);
-                System.out.println(" successful.");
+                System.out.println("元 成功.");
             } else {
-                System.out.println("Insufficient funds or account not found.");
+                System.out.println("余额不足 或 账户不存在.");
             }
         } catch (SQLException e) {
-            System.out.println("Error withdrawing: " + e.getMessage());
+            System.out.println("取款失败: " + e.getMessage());
         }
     }
 
@@ -213,7 +217,7 @@ public class SQLQuery {
             pstmt.setDouble(3, amount);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
-                System.out.println("Insufficient funds or source account not found.");
+                System.out.println("余额不足 或 账户不存在.");
                 return false;
             }
 
@@ -223,15 +227,15 @@ public class SQLQuery {
             pstmt.setInt(2, targetAccountId);
             affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
-                System.out.println("Target account not found.");
+                System.out.println("对方账户不存在.");
                 return false;
             }
 
             recordTransaction(sourceAccountId, targetAccountId, amount, "transfer");
             conn.commit(); // Commit transaction
-            System.out.println("Transfer successful.");
+            System.out.println("转账成功.");
         } catch (SQLException e) {
-            System.out.println("Error transferring: " + e.getMessage());
+            System.out.println("转账失败: " + e.getMessage());
             return false;
         }
         return true;
@@ -250,7 +254,7 @@ public class SQLQuery {
             pstmt.setString(4, transactionType);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error recording transaction: " + e.getMessage());
+            System.out.println("交易记录生成失败: " + e.getMessage());
         }
     }
 
@@ -277,7 +281,7 @@ public class SQLQuery {
                 accountList.add(rs.getInt("account_id"));
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving customer accounts: " + e.getMessage());
+            System.out.println("查询账户列表失败: " + e.getMessage());
         }
         return accountList;
     }
@@ -293,7 +297,7 @@ public class SQLQuery {
                 balance = rs.getBigDecimal("balance");
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving account balance: " + e.getMessage());
+            System.out.println("查询余额失败: " + e.getMessage());
         }
         return balance;
     }
@@ -318,7 +322,7 @@ public class SQLQuery {
                 transactionList.add(record);
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving transaction records: " + e.getMessage());
+            System.out.println("查询交易记录失败: " + e.getMessage());
         }
         return transactionList;
     }
@@ -331,7 +335,7 @@ public class SQLQuery {
             try {
                 conn.close();
             } catch (SQLException e) {
-                System.out.println("Error closing database connection: " + e.getMessage());
+                System.out.println("数据库连接关闭失败: " + e.getMessage());
             }
         }
     }
@@ -340,18 +344,18 @@ public class SQLQuery {
         SQLQuery sqlQuery = new SQLQuery();
 
         // 测试添加客户
-        int customerId = sqlQuery.addCustomer("John Doe", "abcaaddyytiar@qq.com", "123456");
-        System.out.println("Added customer with ID: " + customerId);
+        int customerId = sqlQuery.addCustomer("John Doe", "abcaaddyy9tiar@qq.com", "123456");
+        System.out.println("注册用户ID: " + customerId);
 
         // 测试创建账户
         int accountId = sqlQuery.createAccount(customerId, "123456");
-        System.out.println("Created account with ID: " + accountId);
+        System.out.println("创建账户ID: " + accountId);
 
         // 测试存款
         sqlQuery.deposit(accountId, 500.0);
 
         BigDecimal balance = sqlQuery.getAccountBalance(accountId);
-        System.out.println("Account balance: " + balance);
+        System.out.println("账户余额: " + balance);
 
         // 测试取款
         sqlQuery.withdraw(accountId, 200.0);
@@ -359,19 +363,19 @@ public class SQLQuery {
         // 测试转账
         int targetAccountId = sqlQuery.createAccount(customerId, "222222");
         boolean transferSuccess = sqlQuery.transfer(accountId, targetAccountId, 300.0);
-        if (transferSuccess) System.out.println("Transfer amount: " + "300.00" + " success.");
+        if (transferSuccess) System.out.println("转账: " + "300.00" + "元 成功.");
 
         // 测试查找客户对应的账户列表
         List<Integer> customerAccounts = sqlQuery.getCustomerAccounts(customerId);
-        System.out.println("Customer accounts: " + customerAccounts);
+        System.out.println("用户账户列表: " + customerAccounts);
 
         // 测试查询账户余额
         balance = sqlQuery.getAccountBalance(accountId);
-        System.out.println("Account balance: " + balance);
+        System.out.println("账户余额: " + balance);
 
         // 测试查询交易记录
         List<TransactionRecord> transactionRecords = sqlQuery.getTransactionRecords(accountId);
-        System.out.println("Transaction records for account " + accountId + ":");
+        System.out.println("账户ID " + accountId + " 交易记录:");
         for (TransactionRecord record : transactionRecords) {
             record.printInfo();
         }
@@ -380,7 +384,7 @@ public class SQLQuery {
 
         // 测试删除账户
         boolean deleteAccountSuccess = sqlQuery.deleteAccount(accountId);
-        System.out.println("Account deletion successful: " + deleteAccountSuccess);
+        System.out.println("账户注销: " + deleteAccountSuccess);
 
         // 关闭数据库连接
         sqlQuery.closeConnection();
