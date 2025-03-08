@@ -264,12 +264,12 @@ public class SQLQuery {
 
             recordTransaction(sourceAccountId, targetAccountId, amount, "transfer");
             conn.commit(); // Commit transaction
-            System.out.println("转账成功, 对方开户名: " + recordCustomerName(targetAccountId));
+            return true;
         } catch (SQLException e) {
             System.out.println("转账失败: " + e.getMessage());
             return false;
         }
-        return true;
+
     }
 
     private void recordTransaction(int accountId, Integer targetAccountId, BigDecimal amount, String transactionType) {

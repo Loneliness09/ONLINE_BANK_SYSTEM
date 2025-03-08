@@ -144,7 +144,10 @@ public class CustomerLogin {
             System.out.println("未登录.");
             return false;
         }
-        return query.transfer(accountID, targetAccountId, amount);
+        if (query.transfer(accountID, targetAccountId, amount)) {
+            System.out.println("转账成功, 对方开户名: " + query.recordCustomerName(targetAccountId));
+            return true;
+        } else return false;
     }
 
     public boolean getTransactionRecords() {

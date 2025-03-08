@@ -5,10 +5,10 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Main {
-    public static String gap = "================================\n";
+    public static String gap = "======================================\n";
     public static String loginMenu =
                     gap +
-                    "    您还未登录, 请登录.\n" +
+                    "  您还未登录, 请登录.\n" +
                     "    1. 登录\n" +
                     "    2. 注册\n" +
                     "    3. 退出\n" +
@@ -63,10 +63,9 @@ public class Main {
             } else if (login.getAccountID() == 0) {
                 System.out.print(
                         gap +
-                        "    已登录.\n" +
-                        "    姓名: " + login.getCustomerName() + "\n" +
-                        "    邮箱: " + login.getCustomerEmail() + "\n" +
-                        "    账户列表: " + login.getAccountList().toString() + "\n" +
+                        "  姓名: " + login.getCustomerName() +
+                        "    邮箱: " + login.getCustomerEmail() +"\n" +
+                        "  账户列表: " + login.getAccountList().toString() + "\n" +
                         "    1. 登入账户\n" +
                         "    2. 创建账户\n" +
                         "    3. 注销账户\n" +
@@ -141,8 +140,7 @@ public class Main {
             } else {
                 System.out.print(
                         gap +
-                        "    账户已登入." +
-                        "    姓名: " + login.getCustomerName() + "\n" +
+                        "  姓名: " + login.getCustomerName() +
                         "    账户ID: " + login.getAccountID() + "\n" +
                         "    1. 存款\n" +
                         "    2. 取款\n" +
