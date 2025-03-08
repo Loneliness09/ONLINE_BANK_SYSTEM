@@ -46,11 +46,7 @@ public class CustomerLogin {
 
     // 打印信息
     public void println() {
-        System.out.println("    用户ID: " + customerID);
-        System.out.println("    用户姓名: " + customerName);
-        System.out.print("    账户列表: ");
-        System.out.println(accountList);
-
+        System.out.println("用户ID: " + customerID);
     }
     // 客户注册
     public boolean register(String customerName, String email, String passwd) {

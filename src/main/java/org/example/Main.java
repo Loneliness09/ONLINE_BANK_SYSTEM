@@ -5,13 +5,13 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Main {
-    public static String gap = "======================================\n";
-    public static String loginMenu =
+    public static String gap = "===============================================================================================\n";
+    public static String startMenu =
                     gap +
                     "  您还未登录, 请登录.\n" +
-                    "    1. 登录\n" +
-                    "    2. 注册\n" +
-                    "    3. 退出\n" +
+                    "    1. 用户登录\n" +
+                    "    2. 用户注册\n" +
+                    "    3. 退出程序\n" +
                     gap;
 
     public static void main(String[] args) {
@@ -26,15 +26,17 @@ public class Main {
         BigDecimal amount;
         while (true) {
             if (login.getCustomerID() == 0) {
-                System.out.print(loginMenu);
+                System.out.print(startMenu);
                 System.out.print("请输入: ");
                 in = input.nextLine();
+                System.out.print(gap);
                 switch (in) {
                     case "1": {
                         System.out.print("邮箱: ");
                         String email = input.nextLine();
                         System.out.print("密码: ");
                         passwd = input.nextLine();
+                        System.out.print(gap);
                         if (!login.login(email, passwd)) {
                             System.out.println("登录失败.");
                             continue;
@@ -76,6 +78,7 @@ public class Main {
                 );
                 System.out.print("请输入: ");
                 in = input.nextLine();
+                System.out.print(gap);
                 switch (in) {
                     case "1":
                         System.out.print("请输入账户ID: ");
@@ -153,15 +156,16 @@ public class Main {
                 );
                 System.out.print("请输入: ");
                 in = input.nextLine();
+                System.out.print(gap);
                 switch (in) {
                     case "1":
                         System.out.print("请输入金额: ");
                         amount = input.nextBigDecimal();
                         input.nextLine();
                         if (login.deposit(amount)) {
-                            System.out.println("账户ID " + accountID + " 存款成功.");
+                            System.out.println("账户ID " + login.getAccountID() + " 存款成功.");
                         } else {
-                            System.out.println("账户ID " + accountID + " 存款失败.");
+                            System.out.println("账户ID " + login.getAccountID() + " 存款失败.");
                         }
                         break;
 
@@ -187,14 +191,15 @@ public class Main {
                         amount = input.nextBigDecimal();
                         input.nextLine();
                         if (login.transfer(accountID, amount)) {
-                            System.out.println("账户ID " + accountID + " 转账成功.");
+                            System.out.println("向账户ID " + accountID + " 转账成功.");
                         } else {
-                            System.out.println("账户ID " + accountID + " 转账失败.");
+                            System.out.println("向账户ID " + accountID + " 转账失败.");
                         }
                         break;
 
                     case "5":
                         if (login.getTransactionRecords()) {
+                            System.out.print(gap);
                             System.out.println("账户ID " + accountID + " 查询成功.");
                         } else {
                             System.out.println("账户ID " + accountID + " 查询失败.");
