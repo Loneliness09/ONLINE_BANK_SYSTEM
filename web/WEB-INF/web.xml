@@ -3,4 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <display-name>ONLINE_BANK</display-name>
+    <description>Online bank application.</description>
+
+    <context-param>
+        <param-name>ContextParameter</param-name>
+        <param-value>test</param-value>
+    </context-param>
+
+    <welcome-file-list>
+        <welcome-file>login.jsp</welcome-file>
+    </welcome-file-list>
+
 </web-app>

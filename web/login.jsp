@@ -21,6 +21,7 @@
 
 <h2>Register</h2>
 <form action="registerServlet" method="post">
+    Name: <input type="name" name="name" required><br>
     Email: <input type="email" name="email" required><br>
     Password: <input type="password" name="password" required><br>
     <input type="submit" value="Register">

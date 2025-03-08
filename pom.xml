@@ -7,6 +7,7 @@
     <groupId>com.alight</groupId>
     <artifactId>ONLINE_BANK_SYSTEM</artifactId>
     <version>0.1.1</version>
+    <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -38,15 +39,12 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>5.3.5</version>
         </dependency>
-
-
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -56,9 +54,9 @@
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-aspects -->
         <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-aspects</artifactId>
-        <version>5.3.5</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>5.3.5</version>
         </dependency>
     </dependencies>
 
