@@ -172,6 +172,7 @@ public class SQLQuery {
                     int affectedRows = deleteStmt.executeUpdate();
                     if (affectedRows > 0) {
                         System.out.println("ID为 " + accountId + " 的账户已注销.");
+                        return true;
                     } else {
                         System.out.println("没有找到ID为 " + accountId + " 的账户");
                         return false;
@@ -184,7 +185,7 @@ public class SQLQuery {
                 System.out.println("账户注销错误: " + e.getMessage());
                 return false;
             }
-            return true;
+
         } else {
             System.out.println("不可以注销ID为 " + accountId + " 的账户, 因为它还有存款.");
             return false;
@@ -225,10 +226,11 @@ public class SQLQuery {
                 System.out.print("取出 ");
                 System.out.print(amount);
                 System.out.println("元 成功.");
+                return true;
             } else {
                 System.out.println("余额不足 或 账户不存在.");
+                return false;
             }
-            return true;
         } catch (SQLException e) {
             System.out.println("取款失败: " + e.getMessage());
             return true;

@@ -36,6 +36,10 @@ public class CustomerLogin {
         return accountList;
     }
 
+    public void setAccountList() {
+        accountList = query.getCustomerAccounts(customerID);
+    }
+
     public int getAccountID() {
         return accountID;
     }
@@ -108,9 +112,9 @@ public class CustomerLogin {
         accountID = 0;
         System.out.println("账户登出.");
     }
-    public boolean deleteAccount(int accountID) {
+    public boolean deleteAccount(int accountId) {
         if (customerID == 0 || accountID == 0) return false;
-        return query.deleteAccount(customerID);
+        return query.deleteAccount(accountId);
     }
 
     public boolean deposit(BigDecimal amount) {
@@ -131,12 +135,23 @@ public class CustomerLogin {
         return query.getAccountBalance(accountID);
     }
 
-    public boolean transfer(int targetAccountID, BigDecimal amount) {
+    public boolean transfer(int targetAccountId, BigDecimal amount) {
         if (customerID == 0 || accountID == 0) {
             System.out.println("未登录.");
             return false;
         }
-        return query.transfer(accountID, targetAccountID, amount);
+        return query.transfer(accountID, targetAccountId, amount);
+    }
+
+    public boolean getTransactionRecords() {
+        if (customerID == 0 || accountID == 0) {
+            System.out.println("未登录.");
+            return false;
+        }
+        for (TransactionRecord record:query.getTransactionRecords(accountID)) {
+            record.printInfo();
+        }
+        return true;
     }
 
     public static boolean isNotSixDigitNumber(String str) {

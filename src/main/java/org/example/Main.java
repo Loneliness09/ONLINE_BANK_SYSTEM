@@ -81,6 +81,10 @@ public class Main {
                     case "1":
                         System.out.print("请输入账户ID: ");
                         accountID = Integer.parseInt(input.nextLine());
+                        if (!login.getAccountList().contains(accountID)) {
+                            System.out.println("这不是你的账户.");
+                            break;
+                        }
                         System.out.print("请输入密码: ");
                         passwd = input.nextLine();
                         if (login.accountLogin(accountID, passwd)) {
@@ -109,6 +113,7 @@ public class Main {
                         } else {
                             System.out.println("账户ID " + accountID + " 删除失败.");
                         }
+                        login.setAccountList();
                         break;
 
                     case "4":
@@ -140,7 +145,8 @@ public class Main {
                         "    2. 取款\n" +
                         "    3. 查询余额\n" +
                         "    4. 转账\n" +
-                        "    5. 更换账户\n" +
+                        "    5. 查询流水\n" +
+                        "    6. 更换账户\n" +
                         "    0. 退出程序\n" +
                         gap
                 );
@@ -187,6 +193,14 @@ public class Main {
                         break;
 
                     case "5":
+                        if (login.getTransactionRecords()) {
+                            System.out.println("账户ID " + accountID + " 查询成功.");
+                        } else {
+                            System.out.println("账户ID " + accountID + " 查询失败.");
+                        }
+                        break;
+
+                    case "6":
                         login.accountLogout();
                         break;
 
