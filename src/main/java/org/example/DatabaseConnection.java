@@ -1,5 +1,7 @@
 package org.example;
 
+import com.mysql.cj.jdbc.Driver;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,6 +12,8 @@ public class DatabaseConnection {
     private static final String PASSWORD = "123456";
 
     public static Connection getConnection() throws SQLException {
+        Driver driver = new com.mysql.cj.jdbc.Driver();
+        DriverManager.registerDriver(driver);
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
