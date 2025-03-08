@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 public class CustomerLogin {
     private final SQLQuery query;
-
     private int customerID = 0;
     private String customerName;
     private String customerEmail;
@@ -99,13 +98,13 @@ public class CustomerLogin {
         accountID = query.createAccount(customerID, passwd);
         return accountID != 0;
     }
-    public boolean accountLogin(int accountID, String passwd) {
+    public boolean accountLogin(int accountId, String passwd) {
         if (customerID == 0) return false;
         if (isNotSixDigitNumber(passwd)) {
             System.out.println("登录账户失败: 密码必须为6位");
             return false;
         }
-        this.accountID = query.accountLogin(accountID, passwd);
+        accountID = query.accountLogin(accountId, passwd);
         return this.accountID != 0;
     }
     public void accountLogout() {
