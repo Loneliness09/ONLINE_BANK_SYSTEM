@@ -1,5 +1,6 @@
 package org.example;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,8 +12,6 @@ public class CustomerLogin {
     private String customerName;
     private String customerEmail;
     private List<Integer> accountList;
-
-    private Account account;
     private int accountID = 0;
     static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     static final Pattern pattern = Pattern.compile(EMAIL_REGEX);
@@ -35,6 +34,10 @@ public class CustomerLogin {
 
     public List<Integer> getAccountList() {
         return accountList;
+    }
+
+    public int getAccountID() {
+        return accountID;
     }
 
     // 打印信息
@@ -69,18 +72,6 @@ public class CustomerLogin {
         return true;
     }
 
-    public boolean accountLogin(int accountID, String passwd) {
-        this.accountID = query.accountLogin(accountID, passwd);
-        if (accountID == 0) {
-            return false;
-        }
-        customerName = query.getCustomerName(customerID);
-        customerEmail = query.getCustomerEmail(customerID);
-        accountList = query.getCustomerAccounts(customerID);
-        println();
-        return true;
-    }
-
     // 客户登出
     public void logout() {
         customerID = 0;
@@ -91,7 +82,68 @@ public class CustomerLogin {
 
     // 客户注销账户
     public boolean unregister() {
+        if (customerID == 0) return false;
         return query.deleteCustomer(customerID);
+    }
+
+    public boolean createAccount(String passwd) {
+        if (customerID == 0) return false;
+        if (isNotSixDigitNumber(passwd)) {
+            System.out.println("创建账户失败: 密码必须为6位");
+            return false;
+        }
+        accountID = query.createAccount(customerID, passwd);
+        return accountID != 0;
+    }
+    public boolean accountLogin(int accountID, String passwd) {
+        if (customerID == 0) return false;
+        if (isNotSixDigitNumber(passwd)) {
+            System.out.println("登录账户失败: 密码必须为6位");
+            return false;
+        }
+        this.accountID = query.accountLogin(accountID, passwd);
+        return this.accountID != 0;
+    }
+    public void accountLogout() {
+        accountID = 0;
+        System.out.println("账户登出.");
+    }
+    public boolean deleteAccount(int accountID) {
+        if (customerID == 0 || accountID == 0) return false;
+        return query.deleteAccount(customerID);
+    }
+
+    public boolean deposit(BigDecimal amount) {
+        if (customerID == 0 || accountID == 0) return false;
+        return query.deposit(accountID, amount);
+    }
+
+    public boolean withdraw(BigDecimal amount) {
+        if (customerID == 0 || accountID == 0) return false;
+        return query.withdraw(accountID, amount);
+    }
+
+    public BigDecimal getBalance() {
+        if (customerID == 0 || accountID == 0) {
+            System.out.println("未登录.");
+            return BigDecimal.valueOf(0);
+        }
+        return query.getAccountBalance(accountID);
+    }
+
+    public boolean transfer(int targetAccountID, BigDecimal amount) {
+        if (customerID == 0 || accountID == 0) {
+            System.out.println("未登录.");
+            return false;
+        }
+        return query.transfer(accountID, targetAccountID, amount);
+    }
+
+    public static boolean isNotSixDigitNumber(String str) {
+        String regex = "^\\d{6}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(str);
+        return !matcher.matches();
     }
 
     public static void main(String[] args) {
@@ -99,6 +151,7 @@ public class CustomerLogin {
         CustomerLogin login = new CustomerLogin(sql);
         login.login("abcaaddyytiar@qq.com", "123456");
         login.logout();
+        System.out.println(isNotSixDigitNumber("111111"));
         sql.closeConnection();
     }
 }

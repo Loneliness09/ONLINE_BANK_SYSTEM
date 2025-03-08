@@ -22,7 +22,7 @@ public class SQLQuery {
 
     public int login(String email, String passwd) {
         String sql = "SELECT customer_id FROM Customers WHERE email = ? AND passwd = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql);) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, email);
             pstmt.setString(2, passwd); // 在实际应用中，密码应该被加密并匹配存储的哈希值
             ResultSet rs = pstmt.executeQuery();
@@ -40,7 +40,7 @@ public class SQLQuery {
 
     public int accountLogin(int accountID, String passwd) {
         String sql = "SELECT account_id FROM Accounts WHERE account_id = ? AND passwd = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql);) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, Integer.toString(accountID));
             pstmt.setString(2, passwd); // 在实际应用中，密码应该被加密并匹配存储的哈希值
             ResultSet rs = pstmt.executeQuery();
@@ -50,9 +50,11 @@ public class SQLQuery {
                 return rs.getInt("account_id");
             }
         } catch (SQLException e) {
+            System.out.println("账户登录失败.");
             e.printStackTrace();
             return 0;
         }
+        System.out.println("账户登录失败.");
         return 0;
     }
 
@@ -73,12 +75,12 @@ public class SQLQuery {
     }
 
     public String getCustomerEmail(int customerID) {
-        String sql = "SELECT customer_email FROM Customers WHERE customer_id = ?";
+        String sql = "SELECT email FROM Customers WHERE customer_id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, Integer.toString(customerID));
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return rs.getString("customer_email");
+                return rs.getString("email");
             }
 
         } catch (SQLException e) {
@@ -189,10 +191,10 @@ public class SQLQuery {
         }
     }
 
-    public void deposit(int accountId, double amount) {
+    public boolean deposit(int accountId, BigDecimal amount) {
         String sql = "UPDATE Accounts SET balance = balance + ? WHERE account_id = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setDouble(1, amount);
+            pstmt.setBigDecimal(1, amount);
             pstmt.setInt(2, accountId);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
@@ -200,20 +202,23 @@ public class SQLQuery {
                 System.out.print("存入 ");
                 System.out.print(amount);
                 System.out.println("元 成功.");
+                return true;
             } else {
                 System.out.println("账户不存在.");
+                return false;
             }
         } catch (SQLException e) {
             System.out.println("存款失败: " + e.getMessage());
+            return false;
         }
     }
 
-    public void withdraw(int accountId, double amount) {
+    public boolean withdraw(int accountId, BigDecimal amount) {
         String sql = "UPDATE Accounts SET balance = balance - ? WHERE account_id = ? AND balance >= ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setDouble(1, amount);
+            pstmt.setBigDecimal(1, amount);
             pstmt.setInt(2, accountId);
-            pstmt.setDouble(3, amount);
+            pstmt.setBigDecimal(3, amount);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
                 recordTransaction(accountId, null, amount, "withdraw");
@@ -223,20 +228,23 @@ public class SQLQuery {
             } else {
                 System.out.println("余额不足 或 账户不存在.");
             }
+            return true;
         } catch (SQLException e) {
             System.out.println("取款失败: " + e.getMessage());
+            return true;
         }
     }
 
-    public boolean transfer(int sourceAccountId, int targetAccountId, double amount) {
+    public boolean transfer(int sourceAccountId, int targetAccountId, BigDecimal amount) {
         String sql = "UPDATE Accounts SET balance = balance - ? WHERE account_id = ? AND balance >= ?";
+
         try {
             conn.setAutoCommit(false); // Start transaction
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setDouble(1, amount);
+            pstmt.setBigDecimal(1, amount);
             pstmt.setInt(2, sourceAccountId);
-            pstmt.setDouble(3, amount);
+            pstmt.setBigDecimal(3, amount);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
                 System.out.println("余额不足 或 账户不存在.");
@@ -245,7 +253,7 @@ public class SQLQuery {
 
             sql = "UPDATE Accounts SET balance = balance + ? WHERE account_id = ?";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setDouble(1, amount);
+            pstmt.setBigDecimal(1, amount);
             pstmt.setInt(2, targetAccountId);
             affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
@@ -255,7 +263,7 @@ public class SQLQuery {
 
             recordTransaction(sourceAccountId, targetAccountId, amount, "transfer");
             conn.commit(); // Commit transaction
-            System.out.println("转账成功.");
+            System.out.println("转账成功, 对方开户名: " + recordCustomerName(targetAccountId));
         } catch (SQLException e) {
             System.out.println("转账失败: " + e.getMessage());
             return false;
@@ -263,7 +271,7 @@ public class SQLQuery {
         return true;
     }
 
-    private void recordTransaction(int accountId, Integer targetAccountId, double amount, String transactionType) {
+    private void recordTransaction(int accountId, Integer targetAccountId, BigDecimal amount, String transactionType) {
         String sql = "INSERT INTO Transactions (account_id, target_account_id, amount, transaction_type, transaction_date) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, accountId);
@@ -272,7 +280,7 @@ public class SQLQuery {
             } else {
                 pstmt.setNull(2, java.sql.Types.INTEGER);
             }
-            pstmt.setDouble(3, amount);
+            pstmt.setBigDecimal(3, amount);
             pstmt.setString(4, transactionType);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -349,7 +357,22 @@ public class SQLQuery {
         return transactionList;
     }
 
-
+    public String recordCustomerName(int accountID) {
+        String sql = "SELECT c.customer_name " +
+                "FROM Accounts a " +
+                "JOIN Customers c ON a.customer_id = c.customer_id " +
+                "WHERE a.account_id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, accountID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("customer_name");
+            }
+        } catch (SQLException e) {
+            System.out.println("查询开户名失败: " + e.getMessage());
+        }
+        return "";
+    }
 
     // 确保在不需要时关闭数据库连接
     public void closeConnection() {
@@ -374,17 +397,17 @@ public class SQLQuery {
         System.out.println("创建账户ID: " + accountId);
 
         // 测试存款
-        sqlQuery.deposit(accountId, 500.0);
+        sqlQuery.deposit(accountId, BigDecimal.valueOf(500.0));
 
         BigDecimal balance = sqlQuery.getAccountBalance(accountId);
         System.out.println("账户余额: " + balance);
 
         // 测试取款
-        sqlQuery.withdraw(accountId, 200.0);
+        sqlQuery.withdraw(accountId, BigDecimal.valueOf(200.0));
 
         // 测试转账
         int targetAccountId = sqlQuery.createAccount(customerId, "222222");
-        boolean transferSuccess = sqlQuery.transfer(accountId, targetAccountId, 300.0);
+        boolean transferSuccess = sqlQuery.transfer(accountId, targetAccountId, BigDecimal.valueOf(300.0));
         if (transferSuccess) System.out.println("转账: " + "300.00" + "元 成功.");
 
         // 测试查找客户对应的账户列表
