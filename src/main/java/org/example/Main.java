@@ -63,6 +63,7 @@ public class Main {
                         break;
                 }
             } else if (login.getAccountID() == 0) {
+                login.setAccountList();
                 System.out.print(
                         gap +
                         "  姓名: " + login.getCustomerName() +
@@ -116,7 +117,6 @@ public class Main {
                         if (login.deleteAccount(accountID)) {
                             login.accountLogout();
                         }
-                        login.setAccountList();
                         break;
 
                     case "4":
