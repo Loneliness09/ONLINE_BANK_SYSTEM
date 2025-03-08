@@ -15,7 +15,11 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        System.out.println("email: " + email + " password: " + password);
         SQLQuery sql = new SQLQuery();
+        if (sql == null) {
+            return ;
+        }
         CustomerLogin login = new CustomerLogin(sql);
         if (login.login(email, password)) {
             request.getSession().setAttribute("user", email);
