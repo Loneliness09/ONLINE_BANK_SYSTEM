@@ -87,7 +87,11 @@ public class CustomerLogin {
     // 客户注销账户
     public boolean unregister() {
         if (customerID == 0) return false;
-        return query.deleteCustomer(customerID);
+        boolean success = query.deleteCustomer(customerID);
+        if (success) {
+            logout();
+        }
+        return success;
     }
 
     public boolean createAccount(String passwd) {
@@ -113,7 +117,7 @@ public class CustomerLogin {
         System.out.println("账户登出.");
     }
     public boolean deleteAccount(int accountId) {
-        if (customerID == 0 || accountID == 0) return false;
+        if (customerID == 0 || accountId == 0) return false;
         return query.deleteAccount(accountId);
     }
 

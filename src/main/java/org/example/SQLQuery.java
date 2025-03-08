@@ -116,8 +116,6 @@ public class SQLQuery {
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, customerId);
             int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) System.out.println("用户注销成功.");
-            else System.out.println("用户注销失败.");
             return affectedRows > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -145,7 +143,7 @@ public class SQLQuery {
     }
 
     public boolean deleteAccount(int accountId) {
-        System.out.println(getAccountBalance(accountId).toString());
+//        System.out.println(getAccountBalance(accountId).toString());
         if (Objects.equals(Double.valueOf(getAccountBalance(accountId).toString()), 0.0)) {
             if (deleteTransactions(accountId)) System.out.println("交易记录删除成功.");
             // SQL 语句用于删除账户
@@ -170,6 +168,7 @@ public class SQLQuery {
                     // 设置参数并执行删除操作
                     deleteStmt.setInt(1, accountId);
                     int affectedRows = deleteStmt.executeUpdate();
+                    System.out.println(affectedRows);
                     if (affectedRows > 0) {
                         System.out.println("ID为 " + accountId + " 的账户已注销.");
                         return true;

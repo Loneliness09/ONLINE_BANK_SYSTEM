@@ -107,11 +107,12 @@ public class Main {
                     case "3":
                         System.out.print("请输入账户ID: ");
                         accountID = Integer.parseInt(input.nextLine());
+                        if (!login.getAccountList().contains(accountID)) {
+                            System.out.println("这不是你的账户.");
+                            break;
+                        }
                         if (login.deleteAccount(accountID)) {
-                            System.out.println("账户ID " + accountID + " 删除成功.");
                             login.accountLogout();
-                        } else {
-                            System.out.println("账户ID " + accountID + " 删除失败.");
                         }
                         login.setAccountList();
                         break;
@@ -123,6 +124,8 @@ public class Main {
                     case "5":
                         if (login.unregister()) {
                             System.out.println("注销成功.");
+                        } else {
+                            System.out.println("注销失败.");
                         }
                         break;
 
