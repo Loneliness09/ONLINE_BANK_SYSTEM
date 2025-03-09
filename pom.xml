@@ -17,6 +17,7 @@
         <mysql.version>8.0.33</mysql.version>
         <!--日志文件版本-->
         <log4j.version>1.2.17</log4j.version>
+        <spring.version>5.3.5</spring.version>
     </properties>
 
     <dependencies>
@@ -43,25 +44,25 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.3.5</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>5.3.5</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-aspects -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
-            <version>5.3.5</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jdbc</artifactId>
-            <version>9.0.8</version>
+            <version>9.0.102</version>
         </dependency>
 
 
