@@ -1,5 +1,4 @@
-import org.example.CustomerLogin;
-import org.example.SQLQuery;
+package org.example;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -16,8 +15,7 @@ public class RegisterServlet extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        SQLQuery sql = new SQLQuery();
-        CustomerLogin login = new CustomerLogin(sql);
+        CustomerLogin login = (CustomerLogin) request.getSession().getAttribute("User");
         if (login.register(name, email, password)) {
             request.getSession().setAttribute("user", email);
             response.sendRedirect("login.jsp");
