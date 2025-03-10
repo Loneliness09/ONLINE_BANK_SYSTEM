@@ -1,2 +1,2 @@
 # ONLINE_BANK_SYSTEM
-MySQL + Java 线上银行交易系统
+MySQL + Spring + TomCat + JSP 线上银行交易系统
