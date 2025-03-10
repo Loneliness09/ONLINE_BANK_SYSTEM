@@ -16,7 +16,13 @@ public class TransferServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int targetAccountId = Integer.parseInt(request.getParameter("toAccount"));
-        BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(request.getParameter("amount")));
+        BigDecimal amount;
+        try {
+            amount = BigDecimal.valueOf(Double.parseDouble(request.getParameter("amount")));
+        } catch(Exception e){
+            request.getSession().setAttribute("alertMessage", "转账失败, 输入不合法!");
+            return;
+        }
 
         CustomerLogin login = (CustomerLogin) request.getSession().getAttribute("User");
         if (targetAccountId == login.getAccountID()) {

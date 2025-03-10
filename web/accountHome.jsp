@@ -81,7 +81,7 @@
             <label for="transferTo">转入账户:</label>
             <input type="text" id="transferTo" name="toAccount" required>
             <label for="transferAmount">金额:</label>
-            <input type="number" id="transferAmount" name="amount" required>
+            <input type="text" id="transferAmount" name="amount" required>
             <button type="submit" class="button">提交</button>
         </form>
     </div>

@@ -5,11 +5,13 @@
   Time: 13:02
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login and Registration</title>
+    <link rel="stylesheet" type="text/css" href="home.css">
+    <%@ include file="checkWindow.jsp" %>
 </head>
 <body>
 <h2>Login</h2>
@@ -39,17 +41,22 @@
     // 现在user是与当前用户会话关联的独特对象
 %>
 <form action="loginServlet" method="post">
-    Email: <input type="email" name="email" required><br>
-    Password: <input type="password" name="password" required><br>
-    <input type="submit" value="Login">
+    <label for="email">Email: </label>
+    <input type="email" id="email" name="email" required><br>
+    <label for="passwd">Password: </label>
+    <input type="password" id="passwd" name="password" required><br>
+    <button type="submit" class="button">登录</button>
 </form>
 
 <h2>Register</h2>
 <form action="registerServlet" method="post">
-    Name: <input type="name" name="name" required><br>
-    Email: <input type="email" name="email" required><br>
-    Password: <input type="password" name="password" required><br>
-    <input type="submit" value="Register">
+    <label for="tname">Name: </label>
+    <input type="text" id="tname" name="name" required><br>
+    <label for="email1">Email: </label>
+    <input type="email" id="email1" name="email" required><br>
+    <label for="passwd1">Password: </label>
+    <input type="password" id="passwd1" name="password" required><br>
+    <button type="submit" class="button">注册</button>
 </form>
 
 <%
