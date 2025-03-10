@@ -149,35 +149,23 @@ public class SQLQuery {
             // SQL 语句用于删除账户
             String deleteAccountSql = "DELETE FROM Accounts WHERE account_id = ?";
             // SQL 语句用于检查账户是否有交易记录
-            String checkTransactionsSql = "SELECT COUNT(*) FROM Transactions WHERE account_id = ?";
+            String updateTransactionsSql = "UPDATE Transactions SET target_account_id = null WHERE target_account_id = ?";
 
-            try (PreparedStatement checkStmt = conn.prepareStatement(checkTransactionsSql);
+            try (PreparedStatement checkStmt = conn.prepareStatement(updateTransactionsSql);
                  PreparedStatement deleteStmt = conn.prepareStatement(deleteAccountSql)) {
 
                 // 设置参数并检查账户是否有交易记录
                 checkStmt.setInt(1, accountId);
-                int transactionCount = 0;
-                try (ResultSet rs = checkStmt.executeQuery()) {
-                    if (rs.next()) {
-                        transactionCount = rs.getInt(1);
-                    }
-                }
-
-                // 如果账户没有交易记录，则允许删除
-                if (transactionCount == 0) {
-                    // 设置参数并执行删除操作
-                    deleteStmt.setInt(1, accountId);
-                    int affectedRows = deleteStmt.executeUpdate();
-                    System.out.println(affectedRows);
-                    if (affectedRows > 0) {
-                        System.out.println("ID为 " + accountId + " 的账户已注销.");
-                        return true;
-                    } else {
-                        System.out.println("没有找到ID为 " + accountId + " 的账户");
-                        return false;
-                    }
+                checkStmt.executeUpdate();
+                // 设置参数并执行删除操作
+                deleteStmt.setInt(1, accountId);
+                int affectedRows = deleteStmt.executeUpdate();
+                System.out.println(affectedRows);
+                if (affectedRows > 0) {
+                    System.out.println("ID为 " + accountId + " 的账户已注销.");
+                    return true;
                 } else {
-                    System.out.println("不可注销ID为 " + accountId + " 的账户, 因为它还有交易记录.");
+                    System.out.println("没有找到ID为 " + accountId + " 的账户");
                     return false;
                 }
             } catch (SQLException e) {
@@ -372,8 +360,9 @@ public class SQLQuery {
         } catch (SQLException e) {
             System.out.println("查询开户名失败: " + e.getMessage());
         }
-        return "";
+        return null;
     }
+
 
     // 确保在不需要时关闭数据库连接
     public void closeConnection() {

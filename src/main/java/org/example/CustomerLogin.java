@@ -43,6 +43,10 @@ public class CustomerLogin {
         return accountID;
     }
 
+    public String getTargetName(int targetAccountId) {
+        return query.recordCustomerName(targetAccountId);
+    }
+
     // 打印信息
     public void println() {
         System.out.println("用户ID: " + customerID);
@@ -98,7 +102,7 @@ public class CustomerLogin {
         accountID = query.createAccount(customerID, passwd);
         return accountID != 0;
     }
-    public boolean accountLogin(int accountId, String passwd) {
+    public boolean loginAccount(int accountId, String passwd) {
         if (customerID == 0) return false;
         if (isNotSixDigitNumber(passwd)) {
             System.out.println("登录账户失败: 密码必须为6位");
@@ -107,13 +111,19 @@ public class CustomerLogin {
         accountID = query.accountLogin(accountId, passwd);
         return this.accountID != 0;
     }
-    public void accountLogout() {
+    public boolean logoutAccount() {
         accountID = 0;
         System.out.println("账户登出.");
+        return true;
     }
     public boolean deleteAccount(int accountId) {
         if (customerID == 0 || accountId == 0) return false;
-        return query.deleteAccount(accountId);
+        if (query.deleteAccount(accountId)) {
+            setAccountList();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean deposit(BigDecimal amount) {
@@ -139,13 +149,17 @@ public class CustomerLogin {
             System.out.println("未登录.");
             return false;
         }
+        if (accountID == targetAccountId) {
+            System.out.println("转账失败, 不可给本账户转账.");
+            return false;
+        }
         if (query.transfer(accountID, targetAccountId, amount)) {
             System.out.println("转账成功, 对方开户名: " + query.recordCustomerName(targetAccountId));
             return true;
         } else return false;
     }
 
-    public boolean getTransactionRecords() {
+    public boolean printTransactionRecords() {
         if (customerID == 0 || accountID == 0) {
             System.out.println("未登录.");
             return false;
@@ -154,6 +168,16 @@ public class CustomerLogin {
             record.printInfo();
         }
         return true;
+    }
+
+    public List<TransactionRecord> getTransactionRecords() {
+        if (customerID == 0 || accountID == 0) {
+            System.out.println("未登录.");
+            return null;
+        }
+        List<TransactionRecord> records = query.getTransactionRecords(accountID);
+        if (records.size() == 0) return null;
+        return records;
     }
 
     public static boolean isNotSixDigitNumber(String str) {

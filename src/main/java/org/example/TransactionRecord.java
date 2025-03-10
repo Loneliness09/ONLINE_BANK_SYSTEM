@@ -5,12 +5,12 @@ import java.sql.Timestamp;
 
 // 内部类用于表示交易记录
 public class TransactionRecord {
-    private int transactionId;
-    private int accountId;
-    private int targetAccountId;
-    private BigDecimal amount;
-    private String transactionType;
-    private Timestamp transactionDate;
+    private final int transactionId;
+    private final int accountId;
+    private final int targetAccountId;
+    private final BigDecimal amount;
+    private final String transactionType;
+    private final Timestamp transactionDate;
 
     public TransactionRecord(int transactionId, int accountId, int targetAccountId, BigDecimal amount, String transactionType, Timestamp transactionDate) {
         this.transactionId = transactionId;
@@ -45,5 +45,14 @@ public class TransactionRecord {
         System.out.print("日期: ");
         System.out.print(this.transactionDate);
         System.out.print("\n");
+    }
+
+    public String getString() {
+        return "交易ID: " + transactionId +
+                " 账户ID: " + accountId +
+                " 对方账户ID: " + targetAccountId +
+                " 金额: " + amount +
+                " 类型: " + transactionType +
+                " 日期: " + transactionDate;
     }
 }

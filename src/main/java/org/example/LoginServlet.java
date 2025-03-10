@@ -18,7 +18,8 @@ public class LoginServlet extends HttpServlet {
         System.out.println("email: " + email + " password: " + password);
         CustomerLogin login = (CustomerLogin) request.getSession().getAttribute("User");
         if (login.login(email, password)) {
-            request.getSession().setAttribute("email", email);
+            request.getSession().setAttribute("alertMessage", "登录成功!");
+//            request.getSession().setAttribute("User", login);
             response.sendRedirect("home.jsp");
         } else {
             request.setAttribute("error", "Invalid email or password!");
