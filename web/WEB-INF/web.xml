@@ -37,6 +37,87 @@
         <url-pattern>/logoutServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UnRegisterServlet</servlet-name>
+        <servlet-class>org.example.UnRegisterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UnRegisterServlet</servlet-name>
+        <url-pattern>/unRegisterServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DepositServlet</servlet-name>
+        <servlet-class>org.example.DepositServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DepositServlet</servlet-name>
+        <url-pattern>/depositServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>WithdrawServlet</servlet-name>
+        <servlet-class>org.example.WithdrawServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>WithdrawServlet</servlet-name>
+        <url-pattern>/withdrawServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TransferServlet</servlet-name>
+        <servlet-class>org.example.TransferServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TransferServlet</servlet-name>
+        <url-pattern>/transferServlet</url-pattern>
+    </servlet-mapping>
+
+<!--    <servlet>-->
+<!--        <servlet-name>TransactionRecordsServlet</servlet-name>-->
+<!--        <servlet-class>org.example.TransactionRecordsServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>TransactionRecordsServlet</servlet-name>-->
+<!--        <url-pattern>/transactionRecordsServlet</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+    <servlet>
+        <servlet-name>CreateAccountServlet</servlet-name>
+        <servlet-class>org.example.CreateAccountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateAccountServlet</servlet-name>
+        <url-pattern>/createAccountServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LoginAccountServlet</servlet-name>
+        <servlet-class>org.example.LoginAccountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginAccountServlet</servlet-name>
+        <url-pattern>/loginAccountServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutAccountServlet</servlet-name>
+        <servlet-class>org.example.LogoutAccountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutAccountServlet</servlet-name>
+        <url-pattern>/logoutAccountServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteAccountServlet</servlet-name>
+        <servlet-class>org.example.DeleteAccountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteAccountServlet</servlet-name>
+        <url-pattern>/deleteAccountServlet</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>

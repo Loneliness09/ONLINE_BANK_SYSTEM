@@ -89,7 +89,7 @@ public class Main {
                         }
                         System.out.print("请输入密码: ");
                         passwd = input.nextLine();
-                        if (login.accountLogin(accountID, passwd)) {
+                        if (login.loginAccount(accountID, passwd)) {
                             System.out.println("账户ID " + accountID + " 登入成功.");
                         } else {
                             System.out.println("账户ID " + accountID + " 登入失败.");
@@ -114,7 +114,7 @@ public class Main {
                             break;
                         }
                         if (login.deleteAccount(accountID)) {
-                            login.accountLogout();
+                            login.logoutAccount();
                         }
                         break;
 
@@ -197,7 +197,7 @@ public class Main {
                         break;
 
                     case "5":
-                        if (login.getTransactionRecords()) {
+                        if (login.printTransactionRecords()) {
                             System.out.print(gap);
                             System.out.println("账户ID " + accountID + " 查询成功.");
                         } else {
@@ -206,7 +206,7 @@ public class Main {
                         break;
 
                     case "6":
-                        login.accountLogout();
+                        login.logoutAccount();
                         break;
 
                     case "0":
