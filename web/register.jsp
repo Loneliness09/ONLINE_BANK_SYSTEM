@@ -1,6 +1,4 @@
-<%@ page import="org.example.CustomerLogin" %>
-<%@ page import="org.example.SQLQuery" %>
-<%--
+<%@ page import="org.example.CustomerLogin" %><%--
  Created by IntelliJ IDEA.
  User: Jarvis Sun
  Date: 2025/3/8
@@ -23,15 +21,15 @@
       color: #c9d1d9;
     }
     .container {
-      max-width: 600px;
+      max-width: 400px;
       margin: 50px auto;
-      padding: 30px;
+      padding: 20px;
       border-radius: 10px;
       background-color: #161b22;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
     h2 {
-      color: #58a6ff;
+      color: #ffffff;
       text-align: center;
     }
     form {
@@ -75,46 +73,38 @@
     }
   </style>
 </head>
-<%!
-  private SQLQuery sql;
-  public void jspInit() {
-    sql = new SQLQuery();
-  }
-%>
-
+<body>
 <%
   // 检查会话中是否已经有UserSessionObject
   CustomerLogin user = (CustomerLogin) session.getAttribute("User");
 
   // 如果没有，则创建一个新的User并存储在会话中
   if (user == null) {
-    System.out.println("没有找到用户对象, 需要创建.");
-    user = new CustomerLogin(sql);
-    session.setAttribute("User", user);
+    response.sendRedirect("login.jsp");
   } else {
     System.out.println("已找到用户对象.");
   }
   // 现在user是与当前用户会话关联的独特对象
 %>
-<body>
 <div class="container">
-  <h2>Login to Your Account</h2>
-  <form action="loginServlet" method="post">
+  <h2>Sign Up</h2>
+  <form action="registerServlet" method="post">
     <div class="form-group">
-      <label for="email">Username or email address</label>
+      <label for="name">Username</label>
+      <input type="name" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email address</label>
       <input type="email" class="form-control" id="email" name="email" required>
     </div>
     <div class="form-group">
       <label for="password">Password</label>
       <input type="password" class="form-control" id="password" name="password" required>
     </div>
-    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+    <button type="submit" class="btn btn-primary btn-block">Sign up</button>
   </form>
   <p class="text-center mt-3">
-    <a href="#">Forgot password?</a>
-  </p>
-  <p class="text-center mt-3">
-    New to our site? <a href="register.jsp">Sign Up</a>
+    Sign In <a href="login.jsp">Sign Up</a>
   </p>
   <div class="footer-links">
     <a href="#">Terms</a>
