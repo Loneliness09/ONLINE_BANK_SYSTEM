@@ -17,63 +17,7 @@
   <!-- 引入Bootstrap CSS -->
   <link href="css/bootstrap.css" rel="stylesheet">
   <!-- 自定义CSS -->
-  <style>
-    body {
-      background-color: #0d1117;
-      color: #c9d1d9;
-    }
-    .container {
-      max-width: 600px;
-      margin: 50px auto;
-      padding: 30px;
-      border-radius: 10px;
-      background-color: #161b22;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-    h2 {
-      color: #58a6ff;
-      text-align: center;
-    }
-    form {
-      margin-top: 20px;
-    }
-    .form-group label {
-      font-weight: bold;
-    }
-    .form-control {
-      background-color: #0d1117;
-      color: #c9d1d9;
-      border-color: #30363d;
-    }
-    .btn-primary {
-      background-color: #238636;
-      border-color: #238636;
-    }
-    .btn-primary:hover {
-      background-color: #2ea043;
-      border-color: #2ea043;
-    }
-    a {
-      color: #58a6ff;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .footer-links {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
-      font-size: 12px;
-    }
-    .footer-links a {
-      color: #58a6ff;
-      text-decoration: none;
-    }
-    .footer-links a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <link href="css/login.css" rel="stylesheet">
 </head>
 <%!
   private SQLQuery sql;
@@ -98,7 +42,7 @@
 %>
 <body>
 <div class="container">
-  <h2>Login to Your Account</h2>
+  <h2>Sign in</h2>
   <form action="loginServlet" method="post">
     <div class="form-group">
       <label for="email">Username or email address</label>

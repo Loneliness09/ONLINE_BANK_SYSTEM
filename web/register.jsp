@@ -15,63 +15,7 @@
   <!-- 引入Bootstrap CSS -->
   <link href="css/bootstrap.css" rel="stylesheet">
   <!-- 自定义CSS -->
-  <style>
-    body {
-      background-color: #0d1117;
-      color: #c9d1d9;
-    }
-    .container {
-      max-width: 400px;
-      margin: 50px auto;
-      padding: 20px;
-      border-radius: 10px;
-      background-color: #161b22;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-    h2 {
-      color: #ffffff;
-      text-align: center;
-    }
-    form {
-      margin-top: 20px;
-    }
-    .form-group label {
-      font-weight: bold;
-    }
-    .form-control {
-      background-color: #0d1117;
-      color: #c9d1d9;
-      border-color: #30363d;
-    }
-    .btn-primary {
-      background-color: #238636;
-      border-color: #238636;
-    }
-    .btn-primary:hover {
-      background-color: #2ea043;
-      border-color: #2ea043;
-    }
-    a {
-      color: #58a6ff;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .footer-links {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
-      font-size: 12px;
-    }
-    .footer-links a {
-      color: #58a6ff;
-      text-decoration: none;
-    }
-    .footer-links a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  <link href="css/login.css" rel="stylesheet">
 </head>
 <body>
 <%
@@ -104,7 +48,7 @@
     <button type="submit" class="btn btn-primary btn-block">Sign up</button>
   </form>
   <p class="text-center mt-3">
-    Sign In <a href="login.jsp">Sign Up</a>
+    <a href="login.jsp">Sign In</a>
   </p>
   <div class="footer-links">
     <a href="#">Terms</a>
