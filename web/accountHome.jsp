@@ -60,7 +60,7 @@
 %>
 
 <div class="container">
-    <h2>欢迎，<span id="username"><%=user.getCustomerName()%></span></h2>
+    <h2>欢迎, <span id="username"><%=user.getCustomerName()%></span></h2>
     <p>账户ID: <span id="account-id"><%=user.getAccountID()%></span></p>
 
     <div class="text-center">
@@ -147,7 +147,7 @@
                 if (records != null) {
                     for (TransactionRecord record: records) {
             %>
-            <li><%=record.getString()%></li>
+            <li><%=record.toString()%></li>
             <hr style="margin-right: 40px">
             <%
                     }

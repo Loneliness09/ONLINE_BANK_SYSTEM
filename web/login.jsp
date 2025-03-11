@@ -42,23 +42,20 @@
 %>
 <body>
 <div class="container">
-  <h2>Sign in</h2>
+  <h2>Sign In</h2>
   <form action="loginServlet" method="post">
     <div class="form-group">
-      <label for="email">Username or email address</label>
+      <label for="email"> 邮 箱</label>
       <input type="email" class="form-control" id="email" name="email" required>
     </div>
     <div class="form-group">
-      <label for="password">Password</label>
+      <label for="password"> 密 码</label>
       <input type="password" class="form-control" id="password" name="password" required>
     </div>
-    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+    <button type="submit" class="btn btn-primary btn-block">登 录</button>
   </form>
   <p class="text-center mt-3">
-    <a href="#">Forgot password?</a>
-  </p>
-  <p class="text-center mt-3">
-    New to our site? <a href="register.jsp">Sign Up</a>
+    新用户? <a href="register.jsp">注册</a>
   </p>
   <div class="footer-links">
     <a href="#">Terms</a>

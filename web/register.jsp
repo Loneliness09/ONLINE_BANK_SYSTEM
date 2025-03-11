@@ -34,21 +34,21 @@
   <h2>Sign Up</h2>
   <form action="registerServlet" method="post">
     <div class="form-group">
-      <label for="name">Username</label>
+      <label for="name">用户名</label>
       <input type="name" class="form-control" id="name" name="name" required>
     </div>
     <div class="form-group">
-      <label for="email">Email address</label>
+      <label for="email"> 邮 箱</label>
       <input type="email" class="form-control" id="email" name="email" required>
     </div>
     <div class="form-group">
-      <label for="password">Password</label>
+      <label for="password"> 密 码</label>
       <input type="password" class="form-control" id="password" name="password" required>
     </div>
-    <button type="submit" class="btn btn-primary btn-block">Sign up</button>
+    <button type="submit" class="btn btn-primary btn-block">注 册</button>
   </form>
   <p class="text-center mt-3">
-    <a href="login.jsp">Sign In</a>
+    已有账号？ <a href="login.jsp">登录</a>
   </p>
   <div class="footer-links">
     <a href="#">Terms</a>

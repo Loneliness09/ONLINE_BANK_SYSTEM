@@ -47,7 +47,8 @@ public class TransactionRecord {
         System.out.print("\n");
     }
 
-    public String getString() {
+    @Override
+    public String toString() {
         return "交易ID: " + transactionId +
                 " 账户ID: " + accountId +
                 " 对方账户ID: " + targetAccountId +

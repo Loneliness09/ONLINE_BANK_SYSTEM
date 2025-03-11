@@ -28,7 +28,7 @@ form {
 input:-internal-autofill-previewed,
 input:-internal-autofill-selected {
     -webkit-text-fill-color: #c9d1d9 !important;
-    /*background-color: rgba(11, 46, 19, 0);*/
+    background-color: rgba(11, 46, 19, 0);
     transition: background-color 10000s ease-in-out 0s !important;
 }
 

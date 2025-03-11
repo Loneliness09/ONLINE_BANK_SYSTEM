@@ -63,7 +63,7 @@
   System.out.println(accounts);
 %>
 <div class="container">
-<h1>欢迎来到银行线上交易系统</h1>
+<h1>欢迎</h1>
   <hr>
 <div>
   <h2>用户信息</h2>
