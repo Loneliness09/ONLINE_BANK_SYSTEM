@@ -1,4 +1,6 @@
-package org.example;
+package com.servlet;
+
+import org.example.CustomerLogin;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -6,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CreateAccountServlet extends HttpServlet {
+public class DeleteAccountServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -15,16 +17,14 @@ public class CreateAccountServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String password = request.getParameter("password");
-
+        int accountId = Integer.parseInt(request.getParameter("accountId"));
         CustomerLogin login = (CustomerLogin) request.getSession().getAttribute("User");
-        if (login.createAccount(password)) {
-            System.out.println("accountID: " + login.getAccountID() + " password: " + password);
-            request.getSession().setAttribute("alertMessage", "账户创建成功! 密码: " + password);
-//            request.getSession().setAttribute("User", login);
-            response.sendRedirect("accountHome.jsp");
+        if (login.deleteAccount(accountId)) {
+            System.out.println("accountID: " + accountId + " deleted.");
+            request.getSession().setAttribute("alertMessage", "账户注销成功!");
+            response.sendRedirect("home.jsp");
         } else {
-            request.getSession().setAttribute("alertMessage", "账户创建失败, 密码必须为6位!");
+            request.getSession().setAttribute("alertMessage", "账户注销失败, 还有存款或交易记录!");
             request.getRequestDispatcher("home.jsp").forward(request, response);
         }
     }

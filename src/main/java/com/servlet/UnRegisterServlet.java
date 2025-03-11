@@ -1,4 +1,6 @@
-package org.example;
+package com.servlet;
+
+import org.example.CustomerLogin;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
