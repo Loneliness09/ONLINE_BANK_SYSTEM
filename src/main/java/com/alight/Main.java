@@ -67,7 +67,8 @@ public class Main {
                         gap +
                         "  姓名: " + login.getCustomerName() +
                         "    邮箱: " + login.getCustomerEmail() +"\n" +
-                        "  账户列表: " + login.getAccountList().toString() + "\n" +
+                        "    账户列表: " + login.getAccountList().toString() + "\n" +
+                        "    总资产: " + login.getCustomerBalance() +"元\n" +
                         "    1. 登入账户\n" +
                         "    2. 创建账户\n" +
                         "    3. 注销账户\n" +

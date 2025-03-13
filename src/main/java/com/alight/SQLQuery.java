@@ -322,6 +322,22 @@ public class SQLQuery {
         return balance;
     }
 
+    // 查询账户余额
+    public BigDecimal getCustomerBalance(int customerId) {
+        BigDecimal balance = new BigDecimal(0);
+        String sql = "SELECT SUM(balance) FROM Accounts WHERE customer_id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, customerId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                balance = rs.getBigDecimal(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("查询资产失败: " + e.getMessage());
+        }
+        return balance;
+    }
+
     // 查询交易记录（包括交易类型）
     public List<TransactionRecord> getTransactionRecords(int accountId) {
         List<TransactionRecord> transactionList = new ArrayList<>();
@@ -380,7 +396,7 @@ public class SQLQuery {
         SQLQuery sqlQuery = new SQLQuery();
 
         // 测试添加客户
-        int customerId = sqlQuery.addCustomer("John Doe", "abcaaddyy9tiar@qq.com", "123456");
+        int customerId = sqlQuery.addCustomer("John Doe", "aar@qq.com", "123456");
         System.out.println("注册用户ID: " + customerId);
 
         // 测试创建账户

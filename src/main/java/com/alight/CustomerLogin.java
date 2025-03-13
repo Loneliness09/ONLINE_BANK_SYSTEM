@@ -163,6 +163,14 @@ public class CustomerLogin {
         return query.getAccountBalance(accountID);
     }
 
+    public BigDecimal getCustomerBalance() {
+        if (customerID == 0) {
+            System.out.println("未登录.");
+            return new BigDecimal(0);
+        }
+        return query.getCustomerBalance(customerID);
+    }
+
     public boolean transfer(int targetAccountId, BigDecimal amount) {
         if (customerID == 0 || accountID == 0) {
             System.out.println("未登录.");

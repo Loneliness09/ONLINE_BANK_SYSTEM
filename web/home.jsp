@@ -70,6 +70,7 @@
   <p>姓名：<%=user.getCustomerName()%></p>
   <p>邮箱：<%=user.getCustomerEmail()%></p>
   <p>用户ID：<%=user.getCustomerID()%></p>
+  <p>总资产：<%=user.getCustomerBalance()%></p>
   <hr>
   <h3>账户列表</h3>
   <ul>
