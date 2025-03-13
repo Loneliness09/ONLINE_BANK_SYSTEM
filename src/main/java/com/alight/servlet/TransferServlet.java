@@ -21,8 +21,11 @@ public class TransferServlet extends HttpServlet {
         BigDecimal amount;
         try {
             amount = BigDecimal.valueOf(Double.parseDouble(request.getParameter("amount")));
+            System.out.println("输入合法.");
         } catch(Exception e){
+            System.out.println("输入不合法: " + request.getParameter("amount"));
             request.getSession().setAttribute("alertMessage", "转账失败, 输入不合法!");
+            response.sendRedirect("accountHome.jsp");
             return;
         }
 

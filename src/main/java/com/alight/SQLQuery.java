@@ -142,6 +142,7 @@ public class SQLQuery {
         return accountId;
     }
 
+    // 删除
     public boolean deleteAccount(int accountId) {
 //        System.out.println(getAccountBalance(accountId).toString());
         if (Objects.equals(Double.valueOf(getAccountBalance(accountId).toString()), 0.0)) {

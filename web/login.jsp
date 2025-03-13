@@ -24,6 +24,9 @@
   public void jspInit() {
     sql = new SQLQuery();
   }
+  public void jspDestroy() {
+    sql.closeConnection();
+}
 %>
 
 <%
