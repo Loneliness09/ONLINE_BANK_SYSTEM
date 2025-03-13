@@ -1,6 +1,6 @@
-package com.servlet;
+package com.alight.servlet;
 
-import org.example.CustomerLogin;
+import com.alight.CustomerLogin;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class LogoutAccountServlet extends HttpServlet {
-
+public class UnRegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendRedirect("login.jsp");
@@ -17,15 +16,12 @@ public class LogoutAccountServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         CustomerLogin login = (CustomerLogin) request.getSession().getAttribute("User");
-        int id = login.getAccountID();
-        if (login.logoutAccount()) {
-            System.out.println("accountID: " + id + " logouted.");
-            request.getSession().setAttribute("alertMessage", "账户登出成功!");
-            response.sendRedirect("home.jsp");
+        if (login.unregister()) {
+            request.getSession().setAttribute("alertMessage", "注销成功!");
+            response.sendRedirect("login.jsp");
         } else {
-            request.getSession().setAttribute("alertMessage", "Invalid error!");
+            request.getSession().setAttribute("alertMessage", "注销失败!" + login.getMessage());
             request.getRequestDispatcher("home.jsp").forward(request, response);
         }
     }

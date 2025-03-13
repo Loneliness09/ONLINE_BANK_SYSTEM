@@ -1,7 +1,8 @@
-package org.example;
+package com.alight;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,7 @@ public class CustomerLogin {
     private String customerEmail;
     private List<Integer> accountList;
     private int accountID = 0;
+    private String message;
     static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     static final Pattern pattern = Pattern.compile(EMAIL_REGEX);
 
@@ -46,7 +48,12 @@ public class CustomerLogin {
     public String getTargetName(int targetAccountId) {
         return query.recordCustomerName(targetAccountId);
     }
-
+    public String getMessage() {
+        return message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
     // 打印信息
     public void println() {
         System.out.println("用户ID: " + customerID);
@@ -86,6 +93,18 @@ public class CustomerLogin {
     // 客户注销账户
     public boolean unregister() {
         if (customerID == 0) return false;
+        for (int id : accountList) {
+            if (!Objects.equals(Double.valueOf(query.getAccountBalance(id).toString()), 0.0)) {
+                setMessage("账户 " + id + " 还有余额.");
+                return false;
+            }
+        }
+        for (int id : accountList) {
+            if (!deleteAccount(id)) {
+                setMessage("账户删除失败.");
+                return false;
+            }
+        }
         boolean success = query.deleteCustomer(customerID);
         if (success) {
             logout();

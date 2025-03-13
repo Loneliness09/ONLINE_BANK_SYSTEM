@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="org.example.CustomerLogin" %>
+<%@ page import="com.alight.CustomerLogin" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
@@ -96,7 +96,7 @@
 <div>
   <h2>功能列表</h2>
   <button class="button btn btn-primary btn-block" onclick="document.getElementById('loginModal').style.display='block'">登入账户</button>
-  <button class="button btn btn-primary btn-block" onclick="document.getElementById('createModal').style.display='block'">创建账户</button>
+  <button class="button btn btn-primary btn-block" onclick="document.getElementById('createModal').style.display='block'">注册账户</button>
   <button class="button btn btn-primary btn-block" onclick="document.getElementById('deleteModal').style.display='block'">注销账户</button>
   <button class="button btn btn-primary btn-block" onclick="document.getElementById('changeModal').style.display='block'">更换用户</button>
   <button class="button btn btn-primary btn-block" onclick="document.getElementById('logoutModal').style.display='block'">注销用户</button>
@@ -126,7 +126,7 @@
 <div id="createModal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="document.getElementById('createModal').style.display='none'">&times;</span>
-    <h2>创建账户</h2>
+    <h2>注册账户</h2>
     <form action="createAccountServlet" method="post">
       <div class="modal-div">
       <label for="passwd1">密码: </label>
@@ -168,7 +168,7 @@
   <div class="modal-content">
     <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
     <h2>注销用户</h2>
-    <p>您确定要注销用户吗?</p>
+    <p>您确定要注销用户吗? 请先将您的账户余额转出。</p>
     <form action="unRegisterServlet" method="post">
       <button type="submit" class="button btn btn-primary btn-block">注销</button>
     </form>

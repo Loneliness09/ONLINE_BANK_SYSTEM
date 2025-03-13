@@ -12,7 +12,7 @@
     </context-param>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.servlet.LoginServlet</servlet-class>
+        <servlet-class>com.alight.servlet.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -21,7 +21,7 @@
 
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>com.servlet.RegisterServlet</servlet-class>
+        <servlet-class>com.alight.servlet.RegisterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
@@ -30,7 +30,7 @@
 
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>com.servlet.LogoutServlet</servlet-class>
+        <servlet-class>com.alight.servlet.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
@@ -39,7 +39,7 @@
 
     <servlet>
         <servlet-name>UnRegisterServlet</servlet-name>
-        <servlet-class>com.servlet.UnRegisterServlet</servlet-class>
+        <servlet-class>com.alight.servlet.UnRegisterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UnRegisterServlet</servlet-name>
@@ -48,7 +48,7 @@
 
     <servlet>
         <servlet-name>DepositServlet</servlet-name>
-        <servlet-class>com.servlet.DepositServlet</servlet-class>
+        <servlet-class>com.alight.servlet.DepositServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DepositServlet</servlet-name>
@@ -57,7 +57,7 @@
 
     <servlet>
         <servlet-name>WithdrawServlet</servlet-name>
-        <servlet-class>com.servlet.WithdrawServlet</servlet-class>
+        <servlet-class>com.alight.servlet.WithdrawServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>WithdrawServlet</servlet-name>
@@ -66,7 +66,7 @@
 
     <servlet>
         <servlet-name>TransferServlet</servlet-name>
-        <servlet-class>com.servlet.TransferServlet</servlet-class>
+        <servlet-class>com.alight.servlet.TransferServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TransferServlet</servlet-name>
@@ -75,7 +75,7 @@
 
 <!--    <servlet>-->
 <!--        <servlet-name>TransactionRecordsServlet</servlet-name>-->
-<!--        <servlet-class>com.servlet.TransactionRecordsServlet</servlet-class>-->
+<!--        <servlet-class>com.alight.servlet.TransactionRecordsServlet</servlet-class>-->
 <!--    </servlet>-->
 <!--    <servlet-mapping>-->
 <!--        <servlet-name>TransactionRecordsServlet</servlet-name>-->
@@ -84,7 +84,7 @@
 
     <servlet>
         <servlet-name>CreateAccountServlet</servlet-name>
-        <servlet-class>com.servlet.CreateAccountServlet</servlet-class>
+        <servlet-class>com.alight.servlet.CreateAccountServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateAccountServlet</servlet-name>
@@ -93,7 +93,7 @@
 
     <servlet>
         <servlet-name>LoginAccountServlet</servlet-name>
-        <servlet-class>com.servlet.LoginAccountServlet</servlet-class>
+        <servlet-class>com.alight.servlet.LoginAccountServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginAccountServlet</servlet-name>
@@ -102,7 +102,7 @@
 
     <servlet>
         <servlet-name>LogoutAccountServlet</servlet-name>
-        <servlet-class>com.servlet.LogoutAccountServlet</servlet-class>
+        <servlet-class>com.alight.servlet.LogoutAccountServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LogoutAccountServlet</servlet-name>
@@ -111,7 +111,7 @@
 
     <servlet>
         <servlet-name>DeleteAccountServlet</servlet-name>
-        <servlet-class>com.servlet.DeleteAccountServlet</servlet-class>
+        <servlet-class>com.alight.servlet.DeleteAccountServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>DeleteAccountServlet</servlet-name>

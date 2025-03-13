@@ -1,4 +1,4 @@
-package org.example;
+package com.alight;
 
 import com.mysql.cj.jdbc.Driver;
 

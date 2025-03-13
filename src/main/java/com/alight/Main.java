@@ -1,4 +1,4 @@
-package org.example;
+package com.alight;
 
 import java.math.BigDecimal;
 import java.util.Scanner;

@@ -1,5 +1,5 @@
-<%@ page import="org.example.CustomerLogin" %>
-<%@ page import="org.example.SQLQuery" %>
+<%@ page import="com.alight.CustomerLogin" %>
+<%@ page import="com.alight.SQLQuery" %>
 <%--
  Created by IntelliJ IDEA.
  User: Jarvis Sun

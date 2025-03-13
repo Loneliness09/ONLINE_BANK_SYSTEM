@@ -16,8 +16,8 @@
 <body>
 <h2>Login</h2>
 
-<%@ page import="org.example.SQLQuery" %>
-<%@ page import="org.example.CustomerLogin" %>
+<%@ page import="com.alight.SQLQuery" %>
+<%@ page import="com.alight.CustomerLogin" %>
 
 <%!
     private SQLQuery sql;

@@ -1,6 +1,6 @@
-<%@ page import="org.example.CustomerLogin" %>
+<%@ page import="com.alight.CustomerLogin" %>
 <%@ page import="java.util.List" %>
-<%@ page import="org.example.TransactionRecord" %>
+<%@ page import="com.alight.TransactionRecord" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="zh-cn">

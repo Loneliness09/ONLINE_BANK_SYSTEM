@@ -1,6 +1,6 @@
-package com.servlet;
+package com.alight.servlet;
 
-import org.example.CustomerLogin;
+import com.alight.CustomerLogin;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
