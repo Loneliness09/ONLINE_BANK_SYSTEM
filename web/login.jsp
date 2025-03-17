@@ -7,7 +7,7 @@
  Time: 13:02
  To change this template use File Settings | File Templates.
 --%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +17,7 @@
   <!-- 引入Bootstrap CSS -->
   <link href="css/bootstrap.css" rel="stylesheet">
   <!-- 自定义CSS -->
+  <link rel="stylesheet" type="text/css" href="css/public.css">
   <link href="css/login.css" rel="stylesheet">
 </head>
 <%!
@@ -70,4 +71,5 @@
   </div>
 </div>
 </body>
+<%@ include file="checkWindow.jsp" %>
 </html>

@@ -36,7 +36,7 @@ public class TransferServlet extends HttpServlet {
         } else {
             System.out.println("Account " + login.getAccountID() + " transfer amount " + amount + " to account " + targetAccountId);
             if (login.transfer(targetAccountId, amount)) {
-                request.getSession().setAttribute("alertMessage", "转账给 " + targetAccountId + " 金额 " + amount + "元 成功! 对方户名 " + login.getTargetName(targetAccountId));
+                request.getSession().setAttribute("infoMessage", "转账给 " + targetAccountId + " 金额 " + amount + "元 成功! 对方户名 " + login.getTargetName(targetAccountId));
                 response.sendRedirect("accountHome.jsp");
             } else {
                 if (login.getTargetName(targetAccountId) == null) {

@@ -1,5 +1,7 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #c9d1d9;
 }
 
 .modal {
@@ -16,7 +18,8 @@ body {
 }
 
 .modal-content {
-    background-color: #404040;
+    background-color: #161b22;
+    color: #c9d1d9;
     margin: 10% auto;
     padding: 20px;
     border: 1px solid #888;
@@ -24,7 +27,7 @@ body {
 }
 
 .close {
-    color: #bbbbbb;
+    color: #c9d1d9;
     width: auto;
     position: fixed;
     font-size: 28px;
@@ -50,7 +53,8 @@ body {
 }
 
 .button:hover {
-    background-color: #45a049;
+    background-color: #2ea043;
+    border-color: #2ea043;
 }
 
 .modal-div {
@@ -77,3 +81,20 @@ p {
 hr {
     border-color: #6c757d;
 }
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #161b22;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+h1, h2, h3 {
+    color: #58a6ff;
+    text-align: center;
+}
+
+
+

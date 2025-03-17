@@ -66,6 +66,7 @@ public class CustomerLogin {
             System.out.println("注册失败: 邮箱格式不正确.");
             return false;
         }
+
         return query.addCustomer(customerName, email, passwd) != 0;
     }
 
@@ -168,7 +169,9 @@ public class CustomerLogin {
             System.out.println("未登录.");
             return new BigDecimal(0);
         }
-        return query.getCustomerBalance(customerID);
+        BigDecimal balance = query.getCustomerBalance(customerID);
+        if (balance == null) return new BigDecimal(0);
+        return balance;
     }
 
     public boolean transfer(int targetAccountId, BigDecimal amount) {

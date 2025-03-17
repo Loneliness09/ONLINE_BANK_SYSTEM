@@ -5,7 +5,7 @@
   Time: 21:09
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.alight.CustomerLogin" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
@@ -13,42 +13,12 @@
 <head>
   <title>银行线上交易系统 - 用户主页面</title>
 
-  <%@ include file="checkWindow.jsp" %>
   <link href="css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/public.css">
   <link rel="stylesheet" type="text/css" href="css/home.css">
-  <style>
-    body {
-      background-color: #0d1117;
-      color: #c9d1d9;
-    }
 
-    .container {
-      max-width: 600px;
-      margin: 50px auto;
-      padding: 20px;
-      border-radius: 10px;
-      background-color: #161b22;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
+<%--  <link rel="stylesheet" type="text/css" href="css/login.css">--%>
 
-    h1, h2, h3 {
-      color: #58a6ff;
-      text-align: center;
-    }
-
-    .button {
-      background-color: #238636;
-      border-color: #238636;
-      color: white;
-    }
-
-    .button:hover {
-      background-color: #2ea043;
-      border-color: #2ea043;
-    }
-
-    /* 其他样式保持一致 */
-  </style>
 </head>
 <body>
 <%
@@ -175,6 +145,8 @@
     </form>
   </div>
 </div>
+
+<%@ include file="checkWindow.jsp" %>
 
 <script>
   // 获取所有模态框

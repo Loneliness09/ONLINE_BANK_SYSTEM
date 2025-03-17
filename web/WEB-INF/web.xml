@@ -73,14 +73,6 @@
         <url-pattern>/transferServlet</url-pattern>
     </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>TransactionRecordsServlet</servlet-name>-->
-<!--        <servlet-class>com.alight.servlet.TransactionRecordsServlet</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>TransactionRecordsServlet</servlet-name>-->
-<!--        <url-pattern>/transactionRecordsServlet</url-pattern>-->
-<!--    </servlet-mapping>-->
 
     <servlet>
         <servlet-name>CreateAccountServlet</servlet-name>

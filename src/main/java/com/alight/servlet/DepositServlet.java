@@ -22,7 +22,7 @@ public class DepositServlet extends HttpServlet {
         CustomerLogin login = (CustomerLogin) request.getSession().getAttribute("User");
         System.out.println("deposit amount " + amount + " to account " + login.getAccountID());
         if (login.deposit(amount)) {
-            request.getSession().setAttribute("alertMessage", "存款 " + amount + "元 成功!");
+            request.getSession().setAttribute("infoMessage", "存款 " + amount + "元 成功!");
             response.sendRedirect("accountHome.jsp");
         } else {
             request.setAttribute("error", "Invalid amount!");

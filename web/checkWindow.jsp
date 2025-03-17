@@ -16,3 +16,25 @@
         session.removeAttribute("alertMessage");
     }
 %>
+
+<%
+    String info = (String)session.getAttribute("infoMessage"); // 获取错误属性
+    if (info != null) {
+        System.out.println(info);
+%>
+<script type="text/javascript">
+    var notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = '<%=info%>';
+    document.body.appendChild(notification);
+    setTimeout(function () {
+        notification.style.opacity = 0;
+        setTimeout(function () {
+            document.body.removeChild(notification);
+        }, 1000);
+    }, 1000);
+</script>
+<%
+        session.removeAttribute("infoMessage");
+    }
+%>

@@ -1,7 +1,7 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.alight.CustomerLogin" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.alight.TransactionRecord" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -10,43 +10,10 @@
 
     <title>账户主界面</title>
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/public.css">
     <link rel="stylesheet" type="text/css" href="css/home.css">
-    <style>
-        body {
-            background-color: #0d1117;
-            color: #c9d1d9;
-        }
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #161b22;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        h2, h3 {
-            color: #58a6ff;
-            text-align: center;
-        }
-        .button {
-            background-color: #238636;
-            border-color: #238636;
-            color: white;
-            margin: 10px 0;
-        }
-        .button:hover {
-            background-color: #2ea043;
-            border-color: #2ea043;
-        }
-        .modal-content {
-            background-color: #161b22;
-            color: #c9d1d9;
-        }
-        .close {
-            color: #c9d1d9;
-        }
-    </style>
-    <%@ include file="checkWindow.jsp" %>
+
+
 </head>
 <body>
 
@@ -169,6 +136,8 @@
         </form>
     </div>
 </div>
+
+<%@ include file="checkWindow.jsp" %>
 
 <script>
     function showModal(modalId) {

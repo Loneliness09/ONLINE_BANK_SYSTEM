@@ -22,8 +22,7 @@ public class CreateAccountServlet extends HttpServlet {
         CustomerLogin login = (CustomerLogin) request.getSession().getAttribute("User");
         if (login.createAccount(password)) {
             System.out.println("accountID: " + login.getAccountID() + " password: " + password);
-            request.getSession().setAttribute("alertMessage", "账户创建成功! 密码: " + password);
-//            request.getSession().setAttribute("User", login);
+            request.getSession().setAttribute("infoMessage", "账户创建成功! 密码: " + password);
             response.sendRedirect("accountHome.jsp");
         } else {
             request.getSession().setAttribute("alertMessage", "账户创建失败, 密码必须为6位!");

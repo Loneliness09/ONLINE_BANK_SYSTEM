@@ -21,7 +21,7 @@ public class DeleteAccountServlet extends HttpServlet {
         CustomerLogin login = (CustomerLogin) request.getSession().getAttribute("User");
         if (login.deleteAccount(accountId)) {
             System.out.println("accountID: " + accountId + " deleted.");
-            request.getSession().setAttribute("alertMessage", "账户注销成功!");
+            request.getSession().setAttribute("infoMessage", "账户注销成功!");
             response.sendRedirect("home.jsp");
         } else {
             request.getSession().setAttribute("alertMessage", "账户注销失败, 还有存款或交易记录!");

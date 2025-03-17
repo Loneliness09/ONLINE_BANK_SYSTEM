@@ -22,7 +22,7 @@ public class LogoutAccountServlet extends HttpServlet {
         int id = login.getAccountID();
         if (login.logoutAccount()) {
             System.out.println("accountID: " + id + " logouted.");
-            request.getSession().setAttribute("alertMessage", "账户登出成功!");
+            request.getSession().setAttribute("infoMessage", "账户登出成功!");
             response.sendRedirect("home.jsp");
         } else {
             request.getSession().setAttribute("alertMessage", "Invalid error!");

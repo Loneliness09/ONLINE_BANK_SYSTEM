@@ -22,7 +22,7 @@ public class LoginAccountServlet extends HttpServlet {
         System.out.println("accountID: " + accountId + " password: " + password);
         CustomerLogin login = (CustomerLogin) request.getSession().getAttribute("User");
         if (login.loginAccount(accountId, password)) {
-            request.getSession().setAttribute("alertMessage", "账户登录成功!");
+            request.getSession().setAttribute("infoMessage", "账户登录成功!");
 //            request.getSession().setAttribute("User", login);
             response.sendRedirect("accountHome.jsp");
         } else {
