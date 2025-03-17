@@ -11,7 +11,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>银行线上交易系统 - 用户主页面</title>
+  <link rel="icon" type="image/png" href="img/bank.png">
+  <title>BANK - 用户主页面</title>
 
   <link href="css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/public.css">

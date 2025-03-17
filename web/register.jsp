@@ -11,7 +11,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login and Registration</title>
+  <link rel="icon" type="image/png" href="img/bank.png">
+  <title>BANK - 注册</title>
   <!-- 引入Bootstrap CSS -->
   <link href="css/bootstrap.css" rel="stylesheet">
   <!-- 自定义CSS -->
