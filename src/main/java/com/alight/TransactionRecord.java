@@ -10,6 +10,31 @@ public class TransactionRecord {
     private final int targetAccountId;
     private final BigDecimal amount;
     private final String transactionType;
+
+    public int getTransactionId() {
+        return transactionId;
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public int getTargetAccountId() {
+        return targetAccountId;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public Timestamp getTransactionDate() {
+        return transactionDate;
+    }
+
     private final Timestamp transactionDate;
 
     public TransactionRecord(int transactionId, int accountId, int targetAccountId, BigDecimal amount, String transactionType, Timestamp transactionDate) {
